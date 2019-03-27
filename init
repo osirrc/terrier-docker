@@ -1,0 +1,14 @@
+#!/bin/sh
+
+echo "Initializing..."
+
+#Download terrier, bypass "I Agree form"
+
+apk add curl
+
+curl 'http://terrier.org/download/files/terrier-project-5.1-bin.tar?' -H 'Proxy-Connection: keep-alive' -H 'Upgrade-Insecure-Requests: 1' -H 'User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.86 Safari/537.36' -H 'Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3' -H 'Referer: http://terrier.org/download/agree.shtml?terrier-project-5.1-bin.tar' -H 'Accept-Encoding: gzip, deflate' -H 'Accept-Language: pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7' --compressed > terrier-project-5.1.bin.tar
+
+ls
+
+tar -xvf terrier-project-5.1.bin.tar  
+echo $JAVA_HOME
