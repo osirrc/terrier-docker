@@ -1,0 +1,11 @@
+#!/bin/sh
+
+echo "Indexing..."
+
+COLLECTION=$1
+
+/work/terrier-project-5.1/bin/trec_setup.sh $1
+printf "\n\n"
+/work/terrier-project-5.1/bin/terrier batchindexing
+#Make sure that everything went smoothly
+#echo /work/terrier-project-5.1/bin/terrier indexstats
