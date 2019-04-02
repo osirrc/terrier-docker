@@ -2,6 +2,7 @@ FROM openjdk:8-alpine
 
 COPY init init
 COPY index index
+COPY search search
 RUN ["chmod", "+x", "/index"] 
 RUN ["chmod", "+x", "/init"] 
 
