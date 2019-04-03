@@ -2,7 +2,7 @@
 
 echo "Searching..."
 
-TOPIC = $1
+TOPIC = /input/topics/$1
 
 /work/terrier-project-5.1/bin/terrier batchretrieve -w BM25 -DTrecDocTags.process=TEXT,H3,DOCTITLE,HEADLINE,TTL -t $TOPIC -o /output/run.robust04.bm25.topics.robust04.301-450.601-700.txt
 /work/terrier-project-5.1/bin/terrier batchretrieve -w PL2 -DTrecDocTags.process=TEXT,H3,DOCTITLE,HEADLINE,TTL -t $TOPIC -o /output/run.robust04.pl2.topics.robust04.301-450.601-700.txt
