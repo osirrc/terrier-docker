@@ -18,7 +18,9 @@ headers = {
 }
 
 response = requests.get('http://terrier.org/download/files/terrier-project-5.1-bin.tar', headers=headers)
+open("terrier-project-5.1-bin.tar", 'wb').write(response.content)
+
 
 #untar to work directory
-subprocess.run("tar -xvf terrier-project-5.1.bin.tar -C /work")
+subprocess.run("tar -xvf /work/terrier-project-5.1-bin.tar -C /work".split())
 
