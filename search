@@ -1,9 +1,20 @@
-#!/bin/sh
+#!/usr/bin/env python3
 
-echo "Searching..."
+import argparse
+import subprocess
 
-TOPIC = /input/topics/$1
+print("Searching...")
 
-/work/terrier-project-5.1/bin/terrier batchretrieve -w BM25 -DTrecDocTags.process=TEXT,H3,DOCTITLE,HEADLINE,TTL -t $TOPIC -o /output/run.robust04.bm25.topics.robust04.301-450.601-700.txt
-/work/terrier-project-5.1/bin/terrier batchretrieve -w PL2 -DTrecDocTags.process=TEXT,H3,DOCTITLE,HEADLINE,TTL -t $TOPIC -o /output/run.robust04.pl2.topics.robust04.301-450.601-700.txt
-/work/terrier-project-5.1/bin/terrier batchretrieve -w BM25 -q -DTrecDocTags.process=TEXT,H3,DOCTITLE,HEADLINE,TTL -t $TOPIC -o /output/run.robust04.bm25+qe.topics.robust04.301-450.601-700.txt
+parser = argparse.ArgumentParser()
+
+#Given that Terrier, by default only works with TREC queries, the two first options will be ignored
+parser.add_argument("--collection", required=True, type=str, help="Name of the collection")
+parser.add_argument("--topic_format", default="TREC", type=str, help="Format of the topic file")
+parser.add_argument("--topic", required=True, type=str, help="Name of the topic file")
+parser.add_argument("--fields", nargs="+", type="str", default=["TEXT", "H3", "DOCTITLE", "HEADLINE", "TTL"], help="Fields to be ued when searching")
+parser.add_argument("--method", default="BM25", type="str" help="Matching method to be used when searching")
+args = parser.parse_args()
+
+subprocess.run("/work/terrier-project-5.1/bin/terrier batchretrieve -w {0} -DTrecDocTags.process={1} -t {2} -o /output/run.{3}.{0}.topics.robust04.301-450.601-700.txt".format(args.method, ",".join(args.fields), args.topic).split()
+subprocess.run("/work/terrier-project-5.1/bin/terrier batchretrieve -w PL2 -DTrecDocTags.process={0} -t {1} -o /output/run.{2}.pl2.topics.robust04.301-450.601-700.txt".format(",".join(args.fields), args.topic, args.collection).split())
+subprocess.run("/work/terrier-project-5.1/bin/terrier batchretrieve -w BM25 -q -DTrecDocTags.process={0} -t {1} -o /output/run.{2}.bm25+qe.topics.robust04.301-450.601-700.txt".format(",".join(args.fields), args.topic, args.collection).split())
