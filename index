@@ -1,10 +1,14 @@
-#!/bin/sh
+#!/usr/bin/env python3
 
-echo "Indexing..."
+import argparse
+import subprocess
 
-COLLECTION=$1
+print("Indexing...")
 
-/work/terrier-project-5.1/bin/trec_setup.sh /input/collections/$COLLECTION
-/work/terrier-project-5.1/bin/terrier batchindexing
-#Make sure that everything went smoothly
-echo /work/terrier-project-5.1/bin/terrier indexstats
+parser = argparse.ArgumentParser()
+parser.add_argument("--collections", nargs="+", type=str, required=True, help="the collection names")
+
+args = parser.parse_args()
+for name in args.collections:
+    subprocess.run("/work/terrier-project-5.1/bin/trec_setup.sh /input/collections/{}".format(name).split())
+    subprocess.run("/work/terrier-project-5.1/bin/terrier batchindexing".split())
