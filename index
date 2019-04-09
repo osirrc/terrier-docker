@@ -2,6 +2,7 @@
 
 import argparse
 import subprocess
+import os
 
 print("Indexing...")
 
@@ -10,5 +11,7 @@ parser.add_argument("--collections", nargs="+", type=str, required=True, help="t
 
 args = parser.parse_args()
 for name in args.collections:
-    subprocess.run("/work/terrier-project-5.1/bin/trec_setup.sh /input/collections/{}".format(name).split())
-    subprocess.run("/work/terrier-project-5.1/bin/terrier batchindexing".split())
+    os.mkdir("/work/{}/".format(name), 777)
+    subprocess.run("cp -r /work/terrier-project-5.1/ /work/{}/".format(name).split()) 
+    subprocess.run("/work/{0}/terrier-project-5.1/bin/trec_setup.sh /input/collections/{0}".format(name).split())
+    subprocess.run("/work/{0}/terrier-project-5.1/bin/terrier batchindexing".format(name).split())
