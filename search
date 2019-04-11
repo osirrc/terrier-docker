@@ -2,6 +2,7 @@
 
 import argparse
 import subprocess
+import os
 from psutil import virtual_memory
 print("Searching...")
 
@@ -17,27 +18,36 @@ args, _ = parser.parse_known_args()
 
 fields = ",".join(args.fields)
 
-available_memory = virtual_memory().total
-os.environ["TERRIER_HEAP_MEM"] = available_memory
 #run standard model 
 subprocess.run("""
-    /work/terrier-project-5.1/bin/terrier batchretrieve -w {1} 
-    -DTrecDocTags.process={2} -t {3} 
-    -I /work/indexex/{0}
-    -p 
-    -o /output/run.{4}.{1}.topics.robust04.301-450.601-700.txt
-    """.format(args.collection, args.method, fields, args.topic).split()
+    /work/terrier-project-5.1/bin/terrier batchretrieve 
+    -I /work/indexes/{0}
+    -o /output/run.{0}.{1}.topics.robust04.301-450.601-700.txt
+    -w {1}
+    -t {2} 
+    -DTrecDocTags.process={3} 
+    -Dtrec.output.format.length={4}
+    """.format(args.collection, args.method, args.topic, fields, args.top_k).split()
 
 #Run PL2 
 subprocess.run("""
-    /work/{0}/terrier-project-5.1/bin/terrier batchretrieve -w PL2 
-    -DTrecDocTags.process={1} -t {2} 
-    -o /output/run.{3}.pl2.topics.robust04.301-450.601-700.txt
-    """.format(args.collection, fields, args.topic, args.collection).split())
+    /work/terrier-project-5.1/bin/terrier batchretrieve 
+    -I /work/indexes/{0}
+    -o /output/run.{0}.pl2.topics.robust04.301-450.601-700.txt
+    -w PL2 
+    -t {1}
+    -DTrecDocTags.process={2}
+    -Dtrec.output.format.length={3}
+    """.format(args.collection, args.topic, fields, args.top_k).split())
 
 #Run BM25+QE
 subprocess.run("""
-    /work/{0}/terrier-project-5.1/bin/terrier batchretrieve -w BM25 
-    -q -DTrecDocTags.process={1} -t {2} -DTrec
-    -o /output/run.{3}.bm25+qe.topics.robust04.301-450.601-700.txt
-    """.format(args.collection, fields, args.topic, args.collection).split())
+    /work/terrier-project-5.1/bin/terrier batchretrieve 
+    -I /work/indexes/{0}
+    -o /output/run.{0}.bm25+qe.topics.robust04.301-450.601-700.txt
+    -w BM25
+    -q 
+    -t {1}
+    -DTrecDocTags.process={2} 
+    -Dtrec.output.format.length={3}
+    """.format(args.collection, args.topic, fields, args.top_k).split())
