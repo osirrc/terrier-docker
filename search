@@ -2,7 +2,7 @@
 
 import argparse
 import subprocess
-
+import os
 print("Searching...")
 
 parser = argparse.ArgumentParser()
@@ -12,8 +12,41 @@ parser.add_argument("--topic_format", default="TREC", type=str, help="Format of 
 parser.add_argument("--topic", required=True, type=str, help="Name of the topic file")
 parser.add_argument("--fields", nargs="+", type="str", default=["TEXT", "H3", "DOCTITLE", "HEADLINE", "TTL"], help="Fields to be ued when searching")
 parser.add_argument("--method", default="BM25", type="str" help="Matching method to be used when searching")
-args = parser.parse_args()
+parser.add_argument("--top_k", required=True, type="str", help="Number of results returned per topic")
+args, _ = parser.parse_known_args()
 
-subprocess.run("/work/{0}/terrier-project-5.1/bin/terrier batchretrieve -w {1} -DTrecDocTags.process={2} -t {3} -o /output/run.{4}.{1}.topics.robust04.301-450.601-700.txt".format(args.collection, args.method, ",".join(args.fields), args.topic).split()
-subprocess.run("/work/{0}/terrier-project-5.1/bin/terrier batchretrieve -w PL2 -DTrecDocTags.process={1} -t {2} -o /output/run.{3}.pl2.topics.robust04.301-450.601-700.txt".format(args.collection, ",".join(args.fields), args.topic, args.collection).split())
-subprocess.run("/work/{0}/terrier-project-5.1/bin/terrier batchretrieve -w BM25 -q -DTrecDocTags.process={1} -t {2} -o /output/run.{3}.bm25+qe.topics.robust04.301-450.601-700.txt".format(args.collection, ",".join(args.fields), args.topic, args.collection).split())
+fields = ",".join(args.fields)
+
+#run standard model 
+subprocess.run("""
+    /work/terrier-project-5.1/bin/terrier batchretrieve 
+    -I /work/indexes/{0}
+    -o /output/run.{0}.{1}.topics.robust04.301-450.601-700.txt
+    -w {1}
+    -t {2} 
+    -DTrecDocTags.process={3} 
+    -Dtrec.output.format.length={4}
+    """.format(args.collection, args.method, args.topic, fields, args.top_k).split()
+
+#Run PL2 
+subprocess.run("""
+    /work/terrier-project-5.1/bin/terrier batchretrieve 
+    -I /work/indexes/{0}
+    -o /output/run.{0}.pl2.topics.robust04.301-450.601-700.txt
+    -w PL2 
+    -t {1}
+    -DTrecDocTags.process={2}
+    -Dtrec.output.format.length={3}
+    """.format(args.collection, args.topic, fields, args.top_k).split())
+
+#Run BM25+QE
+subprocess.run("""
+    /work/terrier-project-5.1/bin/terrier batchretrieve 
+    -I /work/indexes/{0}
+    -o /output/run.{0}.bm25+qe.topics.robust04.301-450.601-700.txt
+    -w BM25
+    -q 
+    -t {1}
+    -DTrecDocTags.process={2} 
+    -Dtrec.output.format.length={3}
+    """.format(args.collection, args.topic, fields, args.top_k).split())
