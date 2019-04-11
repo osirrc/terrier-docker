@@ -2,7 +2,7 @@
 
 import argparse
 import subprocess
-
+from psutil import virtual_memory
 print("Searching...")
 
 parser = argparse.ArgumentParser()
@@ -17,10 +17,14 @@ args, _ = parser.parse_known_args()
 
 fields = ",".join(args.fields)
 
+available_memory = virtual_memory().total
+os.environ["TERRIER_HEAP_MEM"] = available_memory
 #run standard model 
 subprocess.run("""
-    /work/{0}/terrier-project-5.1/bin/terrier batchretrieve -w {1} 
+    /work/terrier-project-5.1/bin/terrier batchretrieve -w {1} 
     -DTrecDocTags.process={2} -t {3} 
+    -I /work/indexex/{0}
+    -p 
     -o /output/run.{4}.{1}.topics.robust04.301-450.601-700.txt
     """.format(args.collection, args.method, fields, args.topic).split()
 
