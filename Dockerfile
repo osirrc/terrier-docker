@@ -12,7 +12,6 @@ RUN apk add --update bash && rm -rf /var/cache/apk/*
 RUN apk add curl
 RUN apk add python3
 RUN ["pip3", "install", "requests"]
-RUN ["pip3", "install", "psutil"]
 
 
 WORKDIR /work

@@ -3,7 +3,6 @@
 import argparse
 import subprocess
 import os
-from psutil import virtual_memory
 
 print("Indexing...")
 
@@ -11,11 +10,7 @@ parser = argparse.ArgumentParser()
 parser.add_argument("--collections", nargs="+", type=str, required=True, help="the collection names")
 
 args, unknown = parser.parse_known_args()
-os.mkdir("/work/indexes/"), 777)
-#increase heap size
-mem = int(virtual_memory().total/1000000000)
-os.environ["TERRIER_HEAP_MEM"] = "{}G".format(mem)
-cores = os.cpu_count()
+os.mkdir("/work/indexes/", 777)
 
 for name in args.collections:
     
@@ -24,5 +19,5 @@ for name in args.collections:
         /input/collections/{0}""".format(name).split())
     
     subprocess.run("""
-        /work/terrier-project-5.1/bin/terrier batchindexing -p {1}
-        -I /work/indexes/{0}""".format(name, cores).split())
+        /work/terrier-project-5.1/bin/terrier batchindexing -p 
+        -I /work/indexes/{0}""".format(name).split())

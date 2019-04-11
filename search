@@ -3,7 +3,6 @@
 import argparse
 import subprocess
 import os
-from psutil import virtual_memory
 print("Searching...")
 
 parser = argparse.ArgumentParser()
