@@ -12,7 +12,8 @@ parser.add_argument("--collections", nargs="+", type=str, required=True, help="t
 args, unknown = parser.parse_known_args()
 
 for name in args.collections:
-    #create a new copy of Terrier for each collection
+    
+    #create a folder for this collection index
     os.mkdir("/work/indexes/{}".format(name), 777)
     
     subprocess.run("""
@@ -21,4 +22,4 @@ for name in args.collections:
     
     subprocess.run("""
         /work/{0}/terrier-project-5.1/bin/terrier batchindexing -p 
-        -I /work/indexexes/{0}""".format(name).split())
+        -I /work/indexes/{0}""".format(name).split())
