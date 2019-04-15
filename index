@@ -10,7 +10,8 @@ parser = argparse.ArgumentParser()
 parser.add_argument("--collections", nargs="+", type=str, required=True, help="the collection names")
 
 args, unknown = parser.parse_known_args()
-os.mkdir("/work/indexes/", 777)
+if not os.path.isdir("/work/indexes"):
+    os.mkdir("/work/indexes/", 777)
 
 for name in args.collections:
     
@@ -19,5 +20,5 @@ for name in args.collections:
         /input/collections/{0}""".format(name).split())
     
     subprocess.run("""
-        /work/terrier-project-5.1/bin/terrier batchindexing -p 
+        /work/terrier-project-5.1/bin/terrier batchindexing
         -I /work/indexes/{0}""".format(name).split())
