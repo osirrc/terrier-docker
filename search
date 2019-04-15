@@ -26,7 +26,7 @@ subprocess.run("""
     -I /work/indexes/{0}
     -o /output/run.{0}.{1}.topics.robust04.301-450.601-700.txt
     -w {1}
-    -t {2} 
+    -t /input/topics/{2} 
     -DTrecDocTags.process={3} 
     -Dtrec.output.format.length={4}
     """.format(args.collection, args.method, args.topic, fields, args.top_k).split())
@@ -37,7 +37,7 @@ subprocess.run("""
     -I /work/indexes/{0}
     -o /output/run.{0}.pl2.topics.robust04.301-450.601-700.txt
     -w PL2 
-    -t {1}
+    -t /input/topics/{1}
     -DTrecDocTags.process={2}
     -Dtrec.output.format.length={3}
     """.format(args.collection, args.topic, fields, args.top_k).split())
@@ -49,7 +49,7 @@ subprocess.run("""
     -o /output/run.{0}.bm25+qe.topics.robust04.301-450.601-700.txt
     -w BM25
     -q 
-    -t {1}
+    -t /input/topics/{1}
     -DTrecDocTags.process={2} 
     -Dtrec.output.format.length={3}
     """.format(args.collection, args.topic, fields, args.top_k).split())
