@@ -3,22 +3,23 @@
 import argparse
 import subprocess
 import os
+import json
 
 print("Indexing...")
 
 parser = argparse.ArgumentParser()
-parser.add_argument("--collections", nargs="+", type=str, required=True, help="the collection names")
+parser.add_argument("--json", type=json.loads, required=True, help="json with arguments")
 
 args, unknown = parser.parse_known_args()
 if not os.path.isdir("/work/indexes"):
     os.mkdir("/work/indexes/", 777)
 
-for name in args.collections:
+for collection in args.json["collections"]:
     
     subprocess.run("""
         /work/terrier-project-5.1/bin/trec_setup.sh 
-        /input/collections/{0}""".format(name).split())
+        /input/collections/{0}""".format(collection['name']).split())
     
     subprocess.run("""
         /work/terrier-project-5.1/bin/terrier batchindexing
-        -I /work/indexes/{0}""".format(name).split())
+        -I /work/indexes/{0}""".format(collection['name']).split())
