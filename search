@@ -9,10 +9,6 @@ print("Searching...")
 
 parser = argparse.ArgumentParser()
 parser.add_argument("--json", type=json.loads, required=True, help="json arguments")
-
-parser.add_argument("--collection", required=True, type=str, help="Name of the collection")
-parser.add_argument("--topic", required=True, type=str, help="Name of the topic file")
-parser.add_argument("--top_k", required=True, type=str, help="Number of results returned per topic")
 args, _ = parser.parse_known_args()
 
 if not os.path.isdir("/output"):
