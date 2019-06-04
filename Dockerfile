@@ -10,4 +10,9 @@ RUN ["chmod", "+x", "/search"]
 RUN apk add python3
 RUN apk add git
 RUN apk add maven
+RUN ["pip3", "install", "requests"]
+
+#jtreceval needs gcompat libraries for treceval
+RUN apk add gcompat
+
 WORKDIR /work
