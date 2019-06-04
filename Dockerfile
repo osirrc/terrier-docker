@@ -13,5 +13,7 @@ RUN apk add curl
 RUN apk add python3
 RUN ["pip3", "install", "requests"]
 
+#jtreceval needs gcompat libraries for treceval
+RUN apk add gcompat
 
 WORKDIR /work
