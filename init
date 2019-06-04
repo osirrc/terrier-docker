@@ -9,7 +9,6 @@ print("Initializing...")
 subprocess.run("git clone https://github.com/terrier-org/terrier-core".split())
 curr_dir = os.getcwd()
 os.chdir("{}/terrier-core".format(curr_dir))
-subprocess.run("git reset --hard 02ade08b283473dbc1111471f700e04136087638".split())
 
 #install using mvn
-mvn clean install
+subprocess.run("mvn clean install".split())
