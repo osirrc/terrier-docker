@@ -14,12 +14,19 @@ args, unknown = parser.parse_known_args()
 if not os.path.isdir("/work/indexes"):
     os.mkdir("/work/indexes/", 777)
 
+
+index_options = {
+        "robust04" : "-Dterrier.mvn.coords=org.apache.commons:commons-compress:1.18 -Dfiles.mappings=Z:org.apache.commons.compress.compressors.z.ZCompressorInputStream:null -Dfiles.mappings=z:org.apache.commons.compress.compressors.z.ZCompressorInputStream:null" 
+        }
+
 for collection in args.json["collections"]:
+    name, path = collection['name'], collection['path']
+    params = index_options[name]
     
     subprocess.run("""
-        /work/terrier-project-5.1/bin/trec_setup.sh 
-        /input/collections/{0}""".format(collection['name']).split())
+        /work/terrier-core/bin/trec_setup.sh 
+        {0}""".format(path).split())
     
     subprocess.run("""
-        /work/terrier-project-5.1/bin/terrier batchindexing
-        -I /work/indexes/{0}""".format(collection['name']).split())
+        /work/terrier-core/bin/terrier batchindexing
+        -I /work/indexes/{0} {1}""".format(name, params).split())
