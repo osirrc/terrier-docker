@@ -16,33 +16,39 @@ if not os.path.isdir("/work/indexes"):
 
 
 index_options = {
-        "robust04" : ["-Dterrier.mvn.coords=org.apache.commons:commons-compress:1.18",
-                      "-Dfiles.mappings=Z:org.apache.commons.compress.compressors.z.ZCompressorInputStream:null,z:org.apache.commons.compress.compressors.z.ZCompressorInputStream:null",
-                      "-DTrecDocTags.process=TEXT,H3,DOCTITLE,HEADLINE,TTL"],
+		#http://ir.dcs.gla.ac.uk/wiki/Terrier/Disks1%262
+        "robust04" : {"terrier.mvn.coords": "org.apache.commons:commons-compress:1.18",
+                      "files.mappings":"Z:org.apache.commons.compress.compressors.z.ZCompressorInputStream:null,z:org.apache.commons.compress.compressors.z.ZCompressorInputStream:null",
+                      "TrecDocTags.process":"TEXT,H3,DOCTITLE,HEADLINE,TTL"},
 		#http://ir.dcs.gla.ac.uk/wiki/Terrier/DOTGOV2
-		"gov2" : ["-Dtrec.collection.class=TRECWebCollection",
-				  "-Dindexer.meta.forward.keys=docno,url",
-				  "-Dindexer.meta.forward.keylens=26,256"
-			],
+		"gov2" : {"trec.collection.class":"TRECWebCollection",
+				  "indexer.meta.forward.keys":"docno,url",
+				  "indexer.meta.forward.keylens":"26,256"
+			},
 		#http://ir.dcs.gla.ac.uk/wiki/Terrier/ClueWeb09-B
-		"cw09b" : [
-			"-Dtrec.collection.class=WARC018Collection",
-			"-Dindexer.meta.forward.keys=docno,url",
-			"-Dindexer.meta.forward.keylens=26,256",
-			"-Dindexer.meta.reverse.keys=docno",
-			"-Dmetaindex.compressed.crop.long=true"],
+		"cw09b" : {
+			"trec.collection.class":"WARC018Collection",
+			"indexer.meta.forward.keys":"docno,url",
+			"indexer.meta.forward.keylens":"26,256",
+			"indexer.meta.reverse.keys":"docno",
+			"metaindex.compressed.crop.long":"true"},
 		#http://ir.dcs.gla.ac.uk/wiki/Terrier/ClueWeb12
-		"cw12b" : [
-            "-Dtrec.collection.class=WARC10Collection",
-            "-Dindexer.meta.forward.keys=docno,url",
-            "-Dindexer.meta.forward.keylens=26,256",
-            "-Dindexer.meta.reverse.keys=docno",
-            "-Dmetaindex.compressed.crop.long=true"],
-        }
+		"cw12b" : {
+            "trec.collection.class":"WARC10Collection",
+            "indexer.meta.forward.keys":"docno,url",
+            "indexer.meta.forward.keylens":"26,256",
+            "indexer.meta.reverse.keys":"docno",
+            "metaindex.compressed.crop.long":"true"},
+		"core18" : {
+			"terrier.mvn.coords":"uk.ac.gla.dcs.terrierteam:terrier-wapo:0.1",
+			"trec.collection.class":"uk.ac.gla.terrier.indexing.WAPOCollection",
+			"indexer.meta.forward.keylens":"40"
+		}
+}
 
 for collection in args.json["collections"]:
     name, path = collection['name'], collection['path']
-    params = " ".join(index_options[name])
+    params = " ".join( [ "-D"+k+"="+v for k, v in index_options[name].items() ] )
     
     subprocess.run("""
         /work/terrier-core/bin/trec_setup.sh 
