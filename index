@@ -55,5 +55,5 @@ for collection in args.json["collections"]:
         {0}""".format(path).split())
     
     subprocess.run("""
-        /work/terrier-core/bin/terrier batchindexing
+        /work/terrier-core/bin/terrier batchindexing -p
         -I /work/indexes/{0} {1}""".format(name, params).split())
