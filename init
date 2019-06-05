@@ -11,4 +11,4 @@ curr_dir = os.getcwd()
 os.chdir("{}/terrier-core".format(curr_dir))
 
 #install using mvn
-subprocess.run("mvn -DskipTests clean install".split())
+subprocess.run("mvn -DskipTests -Dmaven.javadoc.skip=true clean install".split())
