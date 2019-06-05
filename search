@@ -14,38 +14,52 @@ args, _ = parser.parse_known_args()
 if not os.path.isdir("/output"):
     os.mkdir("/output", 777)
 
-collection_name = args.json""
+collection_name = args.json["collection"]["name"]
 
-#run standard model 
-subprocess.run("""
-    /work/terrier-core/bin/terrier batchretrieve 
-    -I /work/indexes/{0}
-    -o /output/run.{0}.BM25.topics.robust04.301-450.601-700.txt
-    -w BM25
-    -t /input/topics/{1} 
-    -Dtrec.output.format.length={2}
-    """.format(args.json['collection'], args.json['topic'], args.json['top_k'])
-    .split())
+active_configs=["bm25"]
+if "opts" in args.json and "configs" in args.json["opts"]:
+	active_configs = args.json["opts"]["configs"]
+	del args.json["opts"]["configs"]
+	
 
-#Run PL2 
-subprocess.run("""
-    /work/terrier-project-5.1/bin/terrier batchretrieve 
-    -I /work/indexes/{0}
-    -o /output/run.{0}.pl2.topics.robust04.301-450.601-700.txt
-    -w PL2 
-    -t /input/topics/{1}
-    -Dtrec.output.format.length={2}
-    """.format(args.json['collection'], args.json['topic'], args.json['top_k'])
-    .split())
+configs = { 
+	"bm25" : {"-w" : "BM25"},
+	"pl2"  : {"-w" : "PL2"},
+	"bm25_qe" : {"-w" : "BM25", "-q" : ""},
+	"pl2_qe" : {"-w" : "PL2", "-q" : ""},
+	"bm25_ltr_features" : { 
+		"-w" : "BM25", 
+		"-c" : "labels:on", 
+		"-F" : "Normalised2LETOROutputFormat", 
+		"-Dtrec.matching":"FatFeaturedScoringMatching,org.terrier.matching.daat.FatFull",
+		"-Dfat.featured.scoring.matching.features":"FILE",
+		"-Dproximity.dependency.type":"SD",
+		"-Dfat.featured.scoring.matching.features.file":"/work/terrier-core/etc/features.list",
+		"-Dlearning.labels.file":"$TR_QRELS"  #TODO fix this one
+	},
+	"bm25_ltr_jforest" : {
+		"-w" : "BM25",
+		"-Dtrec.matching":"JforestsModelMatching,FatFeaturedScoringMatching,org.terrier.matching.daat.FatFull",
+		"-Dfat.featured.scoring.matching.features":"FILE",
+		"-Dfat.featured.scoring.matching.features.file":"/work/terrier-core/etc/features.list",
+		"-Dfat.matching.learned.jforest.model":"/output/ensemble.txt",
+		"-Dfat.matching.learned.jforest.statistics":"/output/jforests-feature-stats.txt"
+	}
+}
 
-#Run BM25+QE
-subprocess.run("""
-    /work/terrier-project-5.1/bin/terrier batchretrieve 
-    -I /work/indexes/{0}
-    -o /output/run.{0}.bm25+qe.topics.robust04.301-450.601-700.txt
-    -w BM25
-    -q 
-    -t /input/topics/{1}
-    -Dtrec.output.format.length={2}
-    """.format(args.json['collection'], args.json['topic'], args.json['top_k'])
-    .split())
+for name in active_configs:
+	config=configs[name]
+	opts = " ".join( [ k + " " + v for k,v in config ] )
+	if "opts" in args.json:
+		opts = opts + " ".join( [ k + " " + v for k,v in args.json["opts"] ] )
+	subprocess.run("""
+		/work/terrier-core/bin/terrier batchretrieve
+		-I /work/indexes/{0}
+		-o /output/run.{0}.{1}.txt
+		{2}
+		-t {3}
+		-DTrecQueryTags.skip=DESC,NARR,DOM,HEAD,SMRY,CON,FAC,DEF
+		-Dtrec.querying.dump.settings=false
+		-Dtrec.output.format.length={4}
+		""".format(args.json['collection']['name'], name, opts, args.json['topic']['path'], args.json['top_k']).split())
+	subprocess.run("""rm /output/run.{0}.{1}.txt.settings""".format(args.json['collection']['name'], name).split())
