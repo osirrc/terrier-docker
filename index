@@ -14,12 +14,40 @@ args, unknown = parser.parse_known_args()
 if not os.path.isdir("/work/indexes"):
     os.mkdir("/work/indexes/", 777)
 
+
+index_options = {
+        "robust04" : ["-Dterrier.mvn.coords=org.apache.commons:commons-compress:1.18",
+                      "-Dfiles.mappings=Z:org.apache.commons.compress.compressors.z.ZCompressorInputStream:null,z:org.apache.commons.compress.compressors.z.ZCompressorInputStream:null",
+                      "-DTrecDocTags.process=TEXT,H3,DOCTITLE,HEADLINE,TTL"],
+		#http://ir.dcs.gla.ac.uk/wiki/Terrier/DOTGOV2
+		"gov2" : ["-Dtrec.collection.class=TRECWebCollection",
+				  "-Dindexer.meta.forward.keys=docno,url",
+				  "-Dindexer.meta.forward.keylens=26,256"
+			],
+		#http://ir.dcs.gla.ac.uk/wiki/Terrier/ClueWeb09-B
+		"cw09b" : [
+			"-Dtrec.collection.class=WARC018Collection",
+			"-Dindexer.meta.forward.keys=docno,url",
+			"-Dindexer.meta.forward.keylens=26,256",
+			"-Dindexer.meta.reverse.keys=docno",
+			"-Dmetaindex.compressed.crop.long=true"],
+		#http://ir.dcs.gla.ac.uk/wiki/Terrier/ClueWeb12
+		"cw12b" : [
+            "-Dtrec.collection.class=WARC10Collection",
+            "-Dindexer.meta.forward.keys=docno,url",
+            "-Dindexer.meta.forward.keylens=26,256",
+            "-Dindexer.meta.reverse.keys=docno",
+            "-Dmetaindex.compressed.crop.long=true"],
+        }
+
 for collection in args.json["collections"]:
+    name, path = collection['name'], collection['path']
+    params = " ".join(index_options[name])
     
     subprocess.run("""
-        /work/terrier-project-5.1/bin/trec_setup.sh 
-        /input/collections/{0}""".format(collection['name']).split())
+        /work/terrier-core/bin/trec_setup.sh 
+        {0}""".format(path).split())
     
     subprocess.run("""
-        /work/terrier-project-5.1/bin/terrier batchindexing
-        -I /work/indexes/{0}""".format(collection['name']).split())
+        /work/terrier-core/bin/terrier batchindexing
+        -I /work/indexes/{0} {1}""".format(name, params).split())

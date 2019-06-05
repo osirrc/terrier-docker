@@ -14,17 +14,15 @@ args, _ = parser.parse_known_args()
 if not os.path.isdir("/output"):
     os.mkdir("/output", 777)
 
-#define default arguments
-fields = ','.join(['TEXT', 'H3', 'DOCTITLE', 'HEADLINE', 'TTL'])
+collection_name = args.json""
 
 #run standard model 
 subprocess.run("""
-    /work/terrier-project-5.1/bin/terrier batchretrieve 
+    /work/terrier-core/bin/terrier batchretrieve 
     -I /work/indexes/{0}
     -o /output/run.{0}.BM25.topics.robust04.301-450.601-700.txt
     -w BM25
     -t /input/topics/{1} 
-    -DTrecDocTags.process=TEXT,H3,DOCTITLE,HEADLINE,TTL
     -Dtrec.output.format.length={2}
     """.format(args.json['collection'], args.json['topic'], args.json['top_k'])
     .split())
@@ -36,7 +34,6 @@ subprocess.run("""
     -o /output/run.{0}.pl2.topics.robust04.301-450.601-700.txt
     -w PL2 
     -t /input/topics/{1}
-    -DTrecDocTags.process=TEXT,H3,DOCTITLE,HEADLINE,TTL
     -Dtrec.output.format.length={2}
     """.format(args.json['collection'], args.json['topic'], args.json['top_k'])
     .split())
@@ -49,7 +46,6 @@ subprocess.run("""
     -w BM25
     -q 
     -t /input/topics/{1}
-    -DTrecDocTags.process=TEXT,H3,DOCTITLE,HEADLINE,TTL 
     -Dtrec.output.format.length={2}
     """.format(args.json['collection'], args.json['topic'], args.json['top_k'])
     .split())
