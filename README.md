@@ -60,5 +60,5 @@ For indexing, the corpus name defines the indexing configuration. The following 
 
 # Credits
 
- - Arthur Barbosa Câmara, University of Delft
+ - Arthur Barbosa Câmara, Delft University of Technology
  - Craig Macdonald, University of Glasgow
