@@ -46,14 +46,23 @@ index_options = {
 		}
 }
 
+print(args.json["opts"])
 for collection in args.json["collections"]:
     name, path = collection['name'], collection['path']
     params = " ".join( [ "-D"+k+"="+v for k, v in index_options[name].items() ] )
+
+    opts=""
+    if "opts" in args.json:
+        opts = opts + " ".join( ["-D"+k+"="+v for k, v in args.json["opts"].items()]  )
     
     subprocess.run("""
         /work/terrier-core/bin/trec_setup.sh 
         {0}""".format(path).split())
-    
-    subprocess.run("""
+
+    cmd="""
         /work/terrier-core/bin/terrier batchindexing -p
-        -I /work/indexes/{0} {1}""".format(name, params).split())
+        -I /work/indexes/{0} {1} {2}""".format(name, params, opts)
+    print("Indexing command is " + cmd)
+    subprocess.run(cmd.split())
+
+    subprocess.run("/work/terrier-core/bin/terrier indexstats -I /work/indexes/{0}".format(name).split())
