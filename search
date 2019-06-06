@@ -49,10 +49,10 @@ configs = {
 
 for name in active_configs:
 	config=configs[name]
-	opts = " ".join( [ k + " " + v for k,v in config ] )
+	opts = " ".join( [ k + " " + v for k,v in config.items() ] )
 	if "opts" in args.json:
 		opts = opts + " ".join( [ k + " " + v for k,v in args.json["opts"] ] )
-	subprocess.run("""
+	cmd="""
 		/work/terrier-core/bin/terrier batchretrieve
 		-I /work/indexes/{0}
 		-o /output/run.{0}.{1}.txt
@@ -61,5 +61,7 @@ for name in active_configs:
 		-DTrecQueryTags.skip=DESC,NARR,DOM,HEAD,SMRY,CON,FAC,DEF
 		-Dtrec.querying.dump.settings=false
 		-Dtrec.output.format.length={4}
-		""".format(args.json['collection']['name'], name, opts, args.json['topic']['path'], args.json['top_k']).split())
-	subprocess.run("""rm /output/run.{0}.{1}.txt.settings""".format(args.json['collection']['name'], name).split())
+		""".format(args.json['collection']['name'], name, opts, args.json['topic']['path'], args.json['top_k']).split()
+	print("Executing terrier cmd "+ " ".join(cmd))
+	subprocess.run(cmd)
+	#subprocess.run("""rm /output/run.{0}.{1}.txt.settings""".format(args.json['collection']['name'], name).split())
