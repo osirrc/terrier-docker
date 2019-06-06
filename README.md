@@ -1,7 +1,6 @@
-#Terrier Jig
+# Terrier Jig
 
-This Docker setups Terrier 5.2.
-
+This Docker sets up Terrier 5.2.
 
 
 ## Basic Runs
@@ -47,3 +46,9 @@ You need to specify the features to be used by Terrier - see http://terrier.org/
 You will need to specify the `bm25_ltr_jforest` configuration.
 
 	python run.py search  --repo terrier --collection robust04  --topic topics/topics.robust04.txt --qrels qrels/qrels.robust04.txt   --output /tmp/runs --opts config=bm25_ltr_jforest
+
+
+# Credits
+
+ - Arthur Barbosa Câmara, University of Delft
+ - Craig Macdonald, University of Glasgow
