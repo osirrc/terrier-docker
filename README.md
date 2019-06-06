@@ -7,7 +7,9 @@ This Docker sets up Terrier 5.2.
 
 ### Indexing:
 
-	python run.py prepare     --repo terrier   --collections robust04=/tmp/disk45/disk5/LATIMES/=trectext
+	python run.py prepare     --repo terrier   --collections robust04=/tmp/disk45/=trectext
+
+''Note'': You should remove any README files that come with the corpus, as they include example documents that cause duplicates.
 
 ### Retrieval:
 
@@ -33,7 +35,7 @@ Learning-to-rank will typically require that the index has more information, e.g
 
 ### Indexing:
 
-	python run.py prepare     --repo terrier   --collections robust04=/tmp/disk45/disk5/LATIMES/=trectext --opts "FieldTags.process=HEADLINE"
+	python run.py prepare     --repo terrier   --collections robust04=/tmp/disk45/=trectext --opts "FieldTags.process=HEADLINE"
 
 ### Training:
 
