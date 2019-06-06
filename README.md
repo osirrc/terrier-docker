@@ -47,6 +47,14 @@ You will need to specify the `bm25_ltr_jforest` configuration.
 
 	python run.py search  --repo terrier --collection robust04  --topic topics/topics.robust04.txt --qrels qrels/qrels.robust04.txt   --output /tmp/runs --opts config=bm25_ltr_jforest
 
+# Supported Configurations
+
+For indexing, the corpus name defines the indexing configuration. The following values are supported:
+ - `robust04` - TREC Disks 4&5. You should remove the READMEs from the corpus directories. The configuration uses an external library to support z compressed files.
+ - `gov2` - the TREC GOV2 corpus. Could also be used for GOV, WT2G, WT10G.
+ - `cw09b` - the TREC ClueWeb09 corpus.
+ - `cw12b` - the TREC ClueWeb12 corpus.
+ - `core18` - the TREC Washington Post (WAPO) corpus. The configuration uses an extra Terrier plugin to support the WAPO format.
 
 # Credits
 
