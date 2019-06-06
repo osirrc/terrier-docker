@@ -13,8 +13,7 @@ RUN apk add gcompat
 COPY init init
 COPY index index
 COPY search search
-RUN ["chmod", "+x", "/index"]
-RUN ["chmod", "+x", "/init"]
-RUN ["chmod", "+x", "/search"]
+COPY train train
+RUN ["chmod", "+x", "/index" , "/init", "/search", "/train"]
 
 WORKDIR /work

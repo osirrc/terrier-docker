@@ -17,9 +17,10 @@ if not os.path.isdir("/output"):
 collection_name = args.json["collection"]["name"]
 
 active_configs=["bm25"]
-if "opts" in args.json and "configs" in args.json["opts"]:
-	active_configs = args.json["opts"]["configs"]
-	del args.json["opts"]["configs"]
+if "opts" in args.json and "config" in args.json["opts"]:
+	active_configs = [args.json["opts"]["config"]]
+	print("Active configs are " + str(active_configs))
+	del args.json["opts"]["config"]
 	
 
 configs = { 
@@ -31,19 +32,18 @@ configs = {
 		"-w" : "BM25", 
 		"-c" : "labels:on", 
 		"-F" : "Normalised2LETOROutputFormat", 
-		"-Dtrec.matching":"FatFeaturedScoringMatching,org.terrier.matching.daat.FatFull",
-		"-Dfat.featured.scoring.matching.features":"FILE",
-		"-Dproximity.dependency.type":"SD",
-		"-Dfat.featured.scoring.matching.features.file":"/work/terrier-core/etc/features.list",
-		"-Dlearning.labels.file":"$TR_QRELS"  #TODO fix this one
+		"-Dtrec.matching=FatFeaturedScoringMatching,org.terrier.matching.daat.FatFull" : "",
+		"-Dfat.featured.scoring.matching.features=FILE" : "",
+		"-Dproximity.dependency.type=SD" : "",
+		"-Dfat.featured.scoring.matching.features.file=/output/features.list" : ""
 	},
 	"bm25_ltr_jforest" : {
 		"-w" : "BM25",
-		"-Dtrec.matching":"JforestsModelMatching,FatFeaturedScoringMatching,org.terrier.matching.daat.FatFull",
-		"-Dfat.featured.scoring.matching.features":"FILE",
-		"-Dfat.featured.scoring.matching.features.file":"/work/terrier-core/etc/features.list",
-		"-Dfat.matching.learned.jforest.model":"/output/ensemble.txt",
-		"-Dfat.matching.learned.jforest.statistics":"/output/jforests-feature-stats.txt"
+		"-Dtrec.matching=JforestsModelMatching,FatFeaturedScoringMatching,org.terrier.matching.daat.FatFull" : "",
+		"-Dfat.featured.scoring.matching.features=FILE" : "",
+		"-Dfat.featured.scoring.matching.features.file=/output/features.list" : "",
+		"-Dfat.matching.learned.jforest.model=/output/ensemble.txt" : "",
+		"-Dfat.matching.learned.jforest.statistics=/output/jforests-feature-stats.txt" : ""
 	}
 }
 
@@ -51,7 +51,7 @@ for name in active_configs:
 	config=configs[name]
 	opts = " ".join( [ k + " " + v for k,v in config.items() ] )
 	if "opts" in args.json:
-		opts = opts + " ".join( [ k + " " + v for k,v in args.json["opts"] ] )
+		opts = opts + " ".join( [ k + " " + v for k,v in args.json["opts"].items() ] )
 	cmd="""
 		/work/terrier-core/bin/terrier batchretrieve
 		-I /work/indexes/{0}
