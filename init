@@ -5,10 +5,33 @@ import os
 
 print("Initializing...")
 
-#Download terrier from git and change commit version
-subprocess.run("git clone https://github.com/terrier-org/terrier-core".split())
-curr_dir = os.getcwd()
-os.chdir("{}/terrier-core".format(curr_dir))
+subprocess.run("rm -rf /work/indexes/".split())
 
-#install using mvn
-subprocess.run("mvn -DskipTests -Dmaven.javadoc.skip=true clean install".split())
+github=False
+version="5.2-SNAPSHOT"
+
+if github:
+
+  #Download terrier from git and change commit version
+  subprocess.run("git clone https://github.com/terrier-org/terrier-core".split())
+  curr_dir = os.getcwd()
+  os.chdir("{}/terrier-core".format(curr_dir))
+
+  #install using mvn
+  subprocess.run("mvn -DskipTests -Dmaven.javadoc.skip=true clean install".split())
+
+else:
+  #Download terrier, bypass "I Agree form"
+  import requests
+
+  headers = {
+    'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3',
+    'Referer': "http://terrier.org/download/agree.shtml?terrier-project-{0}-bin.tar".format(version),
+    'Accept-Encoding': 'gzip, deflate',
+  }
+  response = requests.get("http://terrier.org/download/files/terrier-project-{0}-bin.tar".format(version), headers=headers)
+  open("terrier-project-{0}-bin.tar".format(version), 'wb').write(response.content)
+  subprocess.run("tar -xvf /work/terrier-project-{0}-bin.tar -C /work".format(version).split())
+  subprocess.run("ln -s /work/terrier-project-{0}/ /work/terrier-core".format(version).split())
+
+subprocess.run("/work/terrier-core/bin/terrier")
