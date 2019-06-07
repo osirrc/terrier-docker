@@ -11,7 +11,7 @@ print("Training...")
 
 #2GB of reserved system memory
 reserved_memory = 2*(1024**3)
-avaialable_memory = psutil.virtual_memory()[0]
+available_memory = psutil.virtual_memory()[0]
 usable_memory = (available_memory - reserved_memory)//1024**2
 
 my_env = os.environ.copy()
