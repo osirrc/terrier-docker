@@ -5,8 +5,18 @@ import subprocess
 import os
 import json
 import re
+import psutil
 
 print("Training...")
+
+#2GB of reserved system memory
+reserved_memory = 2*(1024**3)
+avaialable_memory = psutil.virtual_memory()[0]
+usable_memory = (available_memory - reserved_memory)//1024**2
+
+my_env = os.environ.copy()
+my_env["TERRIER_HEAP_MEM"] = f"{usable_memory}M"
+
 
 parser = argparse.ArgumentParser()
 parser.add_argument("--json", type=json.loads, required=True, help="json arguments")
@@ -72,10 +82,10 @@ subprocess.run("""
 	/work/terrier-core/bin/terrier jforests 
 		--config-file /work/terrier-core/etc/jforests.properties 
 		--cmd=generate-bin --ranking --folder /output/ --file tr.letor  --file va.letor
-	""".split())
+	""".split(), env=my_env)
 
 subprocess.run("""
 	/work/terrier-core/bin/terrier jforests 
 		--config-file /work/terrier-core/etc/jforests.properties 
 		--cmd=train --ranking --folder /output/
-		--train-file /output/tr.bin --validation-file /output/va.bin --output-model /output/ensemble.txt""".split())
+		--train-file /output/tr.bin --validation-file /output/va.bin --output-model /output/ensemble.txt""".split(), env=my_env)
