@@ -10,8 +10,8 @@ print("Searching...")
 
 
 
-#2GB of reserved system memory
-reserved_memory = 2*(1024**3)
+#512MB of reserved system memory
+reserved_memory = (1024**3)//2
 available_memory = psutil.virtual_memory()[0]
 usable_memory = (available_memory - reserved_memory)//1024**2
 
