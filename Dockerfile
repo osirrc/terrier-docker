@@ -3,6 +3,7 @@ FROM openjdk:8-alpine
 RUN apk add python3
 RUN apk add git
 RUN apk add maven
+RUN ["pip3", "install", "requests"]
 
 #needed for psutil
 RUN apk add musl-dev
