@@ -1,5 +1,5 @@
 [![Build Status](https://travis-ci.com/osirrc/terrier-docker.svg?branch=master)](https://travis-ci.com/osirrc/terrier-docker)
-![Docker Cloud Build Status](https://img.shields.io/docker/cloud/build/osirrc2019/terrier.svg)(https://hub.docker.com/r/osirrc2019/terrier)
+[![Docker Cloud Build Status](https://img.shields.io/docker/cloud/build/osirrc2019/terrier.svg)](https://hub.docker.com/r/osirrc2019/terrier)
 # Terrier Jig
 
 This Docker sets up Terrier 5.2.
