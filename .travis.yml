@@ -1,4 +1,5 @@
 services:
-    - docker
+      - docker
+
 script:
-    - 'docker build . -t terrier'
+      - 'docker build . -t terrier'
