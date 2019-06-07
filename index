@@ -4,8 +4,17 @@ import argparse
 import subprocess
 import os
 import json
+import psutil
 
 print("Indexing...")
+
+#512MB of reserved system memory
+reserved_memory = (1024**3)//2
+available_memory = psutil.virtual_memory()[0]
+usable_memory = (available_memory - reserved_memory)//1024**2
+
+my_env = os.environ.copy()
+my_env["TERRIER_HEAP_MEM"] = f"{usable_memory}M"
 
 parser = argparse.ArgumentParser()
 parser.add_argument("--json", type=json.loads, required=True, help="json with arguments")
@@ -57,12 +66,12 @@ for collection in args.json["collections"]:
     
     subprocess.run("""
         /work/terrier-core/bin/trec_setup.sh 
-        {0}""".format(path).split())
+        {0}""".format(path).split(), env=my_env)
 
     cmd="""
         /work/terrier-core/bin/terrier batchindexing -p
         -I /work/indexes/{0} {1} {2}""".format(name, params, opts)
     print("Indexing command is " + cmd)
-    subprocess.run(cmd.split())
+    subprocess.run(cmd.split(), env=my_env)
 
-    subprocess.run("/work/terrier-core/bin/terrier indexstats -I /work/indexes/{0}".format(name).split())
+    subprocess.run("/work/terrier-core/bin/terrier indexstats -I /work/indexes/{0}".format(name).split(), env=my_env)

@@ -4,8 +4,19 @@ import argparse
 import subprocess
 import os
 import json
+import psutil
 
 print("Searching...")
+
+
+
+#512MB of reserved system memory
+reserved_memory = (1024**3)//2
+available_memory = psutil.virtual_memory()[0]
+usable_memory = (available_memory - reserved_memory)//1024**2
+
+my_env = os.environ.copy()
+my_env["TERRIER_HEAP_MEM"] = f"{usable_memory}M"
 
 parser = argparse.ArgumentParser()
 parser.add_argument("--json", type=json.loads, required=True, help="json arguments")
@@ -63,5 +74,5 @@ for name in active_configs:
 		-Dtrec.output.format.length={4}
 		""".format(args.json['collection']['name'], name, opts, args.json['topic']['path'], args.json['top_k']).split()
 	print("Executing terrier cmd "+ " ".join(cmd))
-	subprocess.run(cmd)
+	subprocess.run(cmd, env=my_env)
 	#subprocess.run("""rm /output/run.{0}.{1}.txt.settings""".format(args.json['collection']['name'], name).split())

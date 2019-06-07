@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.com/osirrc/terrier-docker.svg?branch=master)](https://travis-ci.com/osirrc/terrier-docker)
+[![Docker Cloud Build Status](https://img.shields.io/docker/cloud/build/osirrc2019/terrier.svg)](https://hub.docker.com/r/osirrc2019/terrier)
 # Terrier Jig
 
 This Docker sets up Terrier 5.2.
@@ -5,11 +7,13 @@ This Docker sets up Terrier 5.2.
 
 ## Basic Runs
 
+All of the demonstrations below are with TREC Disks 4 & 5, as used by the TREC Robust track.
+
 ### Indexing:
 
-	python run.py prepare     --repo terrier   --collections robust04=/tmp/disk45/=trectext
+	python run.py prepare --repo terrier --collections robust04=/tmp/disk45/=trectext
 
-''Note'': You should remove any README files that come with the corpus, as they include example documents that cause duplicates.
+*Note*: You should remove any README files that come with the corpus, as they include example documents that cause duplicates.
 
 ### Retrieval:
 
@@ -62,5 +66,3 @@ For indexing, the corpus name defines the indexing configuration. The following 
 
  - Arthur Barbosa Câmara, Delft University of Technology
  - Craig Macdonald, University of Glasgow
-
- test
