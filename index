@@ -27,12 +27,16 @@ if not os.path.isdir("/work/indexes"):
 index_options = {
 		#http://ir.dcs.gla.ac.uk/wiki/Terrier/Disks1%262
         "robust04" : {"terrier.mvn.coords": "org.apache.commons:commons-compress:1.18",
-                      "files.mappings":"Z:org.apache.commons.compress.compressors.z.ZCompressorInputStream:null,z:org.apache.commons.compress.compressors.z.ZCompressorInputStream:null",
+                      "files.mappings":"z:org.apache.commons.compress.compressors.z.ZCompressorInputStream:null," + 
+						"0z:org.apache.commons.compress.compressors.z.ZCompressorInputStream:null," + 
+						"1z:org.apache.commons.compress.compressors.z.ZCompressorInputStream:null," +
+						"2z:org.apache.commons.compress.compressors.z.ZCompressorInputStream:null",
                       "TrecDocTags.process":"TEXT,H3,DOCTITLE,HEADLINE,TTL"},
 		#http://ir.dcs.gla.ac.uk/wiki/Terrier/DOTGOV2
 		"gov2" : {"trec.collection.class":"TRECWebCollection",
 				  "indexer.meta.forward.keys":"docno,url",
-				  "indexer.meta.forward.keylens":"26,256"
+				  "indexer.meta.forward.keylens":"26,256",
+       			"metaindex.compressed.crop.long":"true"
 			},
 		#http://ir.dcs.gla.ac.uk/wiki/Terrier/ClueWeb09-B
 		"cw09b" : {
@@ -67,6 +71,9 @@ for collection in args.json["collections"]:
     subprocess.run("""
         /work/terrier-core/bin/trec_setup.sh 
         {0}""".format(path).split(), env=my_env)
+
+	#grep out any readmes
+    subprocess.run(["/bin/sh", "-c", "egrep -vi (readme|dtd) /work/terrier-core/etc/collection.spec > /work/terrier-core/etc/collection.spec.new; mv /work/terrier-core/etc/collection.spec.new /work/terrier-core/etc/collection.spec"], env=my_env)
 
     cmd="""
         /work/terrier-core/bin/terrier batchindexing -p
