@@ -73,7 +73,14 @@ for collection in args.json["collections"]:
         {0}""".format(path).split(), env=my_env)
 
 	#grep out any readmes
-    subprocess.run(["/bin/sh", "-c", "egrep -vi (readme|dtd) /work/terrier-core/etc/collection.spec > /work/terrier-core/etc/collection.spec.new; mv /work/terrier-core/etc/collection.spec.new /work/terrier-core/etc/collection.spec"], env=my_env)
+    subprocess.run(["/bin/sh", "-c", "egrep -vi 'readme' /work/terrier-core/etc/collection.spec > /work/terrier-core/etc/collection.spec.new; mv /work/terrier-core/etc/collection.spec.new /work/terrier-core/etc/collection.spec"], env=my_env)
+
+    #grep out congressional record
+    if name == "robust04":
+	    subprocess.run(["/bin/sh", "-c", "egrep -vi 'cr93|read|dtd' /work/terrier-core/etc/collection.spec > /work/terrier-core/etc/collection.spec.new; mv /work/terrier-core/etc/collection.spec.new /work/terrier-core/etc/collection.spec"], env=my_env)
+
+    print("Files to index...")
+    subprocess.run(["wc", "-l", "/work/terrier-core/etc/collection.spec"])
 
     cmd="""
         /work/terrier-core/bin/terrier batchindexing -p
