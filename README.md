@@ -7,10 +7,10 @@
 
 [**Arthur Câmara**](https://github.com/ArthurCamara) and [**Craig Macdonald**](https://github.com/cmacdonald)
 
-This is dthe docker image for the [Terrier](http://terrier.org/) toolikt (v5.2) conforming to the [OSIRRC jig](https://github.com/osirrc/jig/) for the [Open-Source IR Replicability Challenge (OSIRRC) at SIGIR 2019](https://osirrc.github.io/osirrc2019/).
+This is the docker image for the [Terrier](http://terrier.org/) toolikt (v5.2) conforming to the [OSIRRC jig](https://github.com/osirrc/jig/) for the [Open-Source IR Replicability Challenge (OSIRRC) at SIGIR 2019](https://osirrc.github.io/osirrc2019/).
 This image is available on [Docker Hub](https://hub.docker.com/r/osirrc2019/terrier)
 
-+ Supported test collections: `robust04`, `gov2`, `cw09b`, `cw12b` (web), `core18` (WAPO)
++ Supported test collections: `robust04`, `gov2`, `cw09b`, `cw12b` (web), `core18` (newswire)
 + Supported hooks: `init`, `index`, `train`, `search`
 
 ## Quick Start
@@ -20,9 +20,8 @@ The following `jig` command can be used to index TREC disks 4/5 for `robust04`:
 ```
 python run.py prepare --repo terrier --collections robust04=/tmp/disk45/=trectext
 ```
-*Note*: You should remove any README files that come with the corpus, as they include example documents that cause duplicates.
 
-The following `jig` command can be usef to perform a retrieval run on the collection with the `robust04` test collection, using BM25 as ranker:
+The following `jig` command can be used to perform a retrieval run on the collection with the `robust04` test collection, using BM25 as ranker:
 
 ```
 python run.py search  \
