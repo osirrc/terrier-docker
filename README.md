@@ -71,3 +71,12 @@ You need to specify the features to be used by Terrier - see http://terrier.org/
 You will need to specify the `bm25_ltr_jforest` configuration.
 
 	python run.py search  --repo terrier --collection robust04  --topic topics/topics.robust04.txt --qrels qrels/qrels.robust04.txt   --output /tmp/runs --opts config=bm25_ltr_jforest
+	
+## Expected Results
+
+### core18
+
+MAP                                     | BM25      | +QE  | PL2   | +QE   
+:---------------------------------------|-----------|-----------|-----------|-----------|
+[TREC 2018 Common Core Track Topics](https://trec.nist.gov/data/core/topics2018.txt)| 0.2326    | 0.2975    | 0.2225    | 0.2728
+
