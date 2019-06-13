@@ -1,21 +1,38 @@
+# Terrier OSIRRC Docker Image
+
 [![Build Status](https://travis-ci.com/osirrc/terrier-docker.svg?branch=master)](https://travis-ci.com/osirrc/terrier-docker)
 [![Docker Cloud Build Status](https://img.shields.io/docker/cloud/build/osirrc2019/terrier.svg)](https://hub.docker.com/r/osirrc2019/terrier)
-# Terrier Jig
 
-This Docker sets up Terrier 5.2.
+[**Arthur Câmara**](https://github.com/ArthurCamara) and [**Craig Macdonald**](https://github.com/cmacdonald)
 
+This is dthe docker image for the [Terrier](http://terrier.org/) toolikt (v5.2) conforming to the [OSIRRC jig](https://github.com/osirrc/jig/) for the [Open-Source IR Replicability Challenge (OSIRRC) at SIGIR 2019](https://osirrc.github.io/osirrc2019/).
+This image is available on [Docker Hub](https://hub.docker.com/r/osirrc2019/terrier)
 
-## Basic Runs
++ Supported test collections: `robust04`, `gov2`, `cw09b`, `cw12b` (web), `core18` (WAPO)
++ Supported hooks: `init`, `index`, `train`, `search`
 
-All of the demonstrations below are with TREC Disks 4 & 5, as used by the TREC Robust track.
+## Quick Start
 
-### Indexing:
+The following `jig` command can be used to index TREC disks 4/5 for `robust04`:
 
-	python run.py prepare --repo terrier --collections robust04=/tmp/disk45/=trectext
-
+```
+python run.py prepare --repo terrier --collections robust04=/tmp/disk45/=trectext
+```
 *Note*: You should remove any README files that come with the corpus, as they include example documents that cause duplicates.
 
-### Retrieval:
+The following `jig` command can be usef to perform a retrieval run on the collection with the `robust04` test collection, using BM25 as ranker:
+
+```
+python run.py search  \
+	--repo osirrc2019/terrier\ 
+	--collection robust04 \
+	--topic topics/topics.robust04.txt \
+	--qrels qrels/qrels.robust04.txt\ 
+	--output /tmp/runs 
+```
+
+
+## Retrieval Methods:
 
 (BM25)
 
@@ -52,17 +69,3 @@ You need to specify the features to be used by Terrier - see http://terrier.org/
 You will need to specify the `bm25_ltr_jforest` configuration.
 
 	python run.py search  --repo terrier --collection robust04  --topic topics/topics.robust04.txt --qrels qrels/qrels.robust04.txt   --output /tmp/runs --opts config=bm25_ltr_jforest
-
-# Supported Configurations
-
-For indexing, the corpus name defines the indexing configuration. The following values are supported:
- - `robust04` - TREC Disks 4&5. You should remove the READMEs from the corpus directories. The configuration uses an external library to support z compressed files.
- - `gov2` - the TREC GOV2 corpus. Could also be used for GOV, WT2G, WT10G.
- - `cw09b` - the TREC ClueWeb09 corpus.
- - `cw12b` - the TREC ClueWeb12 corpus.
- - `core18` - the TREC Washington Post (WAPO) corpus. The configuration uses an extra Terrier plugin to support the WAPO format.
-
-# Credits
-
- - Arthur Barbosa Câmara, Delft University of Technology
- - Craig Macdonald, University of Glasgow
