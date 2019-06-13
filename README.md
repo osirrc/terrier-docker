@@ -2,6 +2,8 @@
 
 [![Build Status](https://travis-ci.com/osirrc/terrier-docker.svg?branch=master)](https://travis-ci.com/osirrc/terrier-docker)
 [![Docker Cloud Build Status](https://img.shields.io/docker/cloud/build/osirrc2019/terrier.svg)](https://hub.docker.com/r/osirrc2019/terrier)
+[![DOI](https://zenodo.org/badge/177832180.svg)](https://zenodo.org/badge/latestdoi/177832180)
+
 
 [**Arthur Câmara**](https://github.com/ArthurCamara) and [**Craig Macdonald**](https://github.com/cmacdonald)
 
