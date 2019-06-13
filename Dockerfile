@@ -42,6 +42,7 @@ RUN cd terrier-spark && mvn -DskipTests install
 RUN rm -rf /terrier-spark
 
 RUN mkdir /notebooks
+EXPOSE 1982/tcp
 COPY simpleRun.ipynb /notebooks/simpleRun.ipynb
 COPY interact interact
 RUN chmod +x interact
