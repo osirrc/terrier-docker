@@ -63,16 +63,19 @@ print(args.json["opts"])
 for collection in args.json["collections"]:
     name, path = collection['name'], collection['path']
     params = " ".join( [ "-D"+k+"="+v for k, v in index_options[name].items() ] )
-
+    block_index = False
     opts=""
     if "opts" in args.json:
+        if "block" in args.json["opts"]:
+            block_index=True
+            del args.json['opts']['block']
         opts = opts + " ".join( ["-D"+k+"="+v for k, v in args.json["opts"].items()]  )
-    
+        print(opts)  
     subprocess.run("""
         /work/terrier-core/bin/trec_setup.sh 
         {0}""".format(path).split(), env=my_env)
 
-	#grep out any readmes
+    #grep out any readmes
     subprocess.run(["/bin/sh", "-c", "egrep -vi 'readme' /work/terrier-core/etc/collection.spec > /work/terrier-core/etc/collection.spec.new; mv /work/terrier-core/etc/collection.spec.new /work/terrier-core/etc/collection.spec"], env=my_env)
 
     #grep out congressional record
@@ -81,11 +84,15 @@ for collection in args.json["collections"]:
 
     print("Files to index...")
     subprocess.run(["wc", "-l", "/work/terrier-core/etc/collection.spec"])
+    
 
     cmd="""
         /work/terrier-core/bin/terrier batchindexing -p
         -I /work/indexes/{0} {1} {2}""".format(name, params, opts)
+    if block_index:
+        cmd = cmd.replace("-p", "-b -p")
     print("Indexing command is " + cmd)
+
     subprocess.run(cmd.split(), env=my_env)
 
     subprocess.run("/work/terrier-core/bin/terrier indexstats -I /work/indexes/{0}".format(name).split(), env=my_env)

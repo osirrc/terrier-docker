@@ -55,10 +55,22 @@ configs = {
 		"-Dfat.featured.scoring.matching.features.file=/output/features.list" : "",
 		"-Dfat.matching.learned.jforest.model=/output/ensemble.txt" : "",
 		"-Dfat.matching.learned.jforest.statistics=/output/jforests-feature-stats.txt" : ""
-	}
+	},
+        "DFRDependenceScore":{
+            "-Dmatching.dsms" : "DFRDependenceScoreModifier",
+            "-Dproximity.dependency.type" : "SD"
+        }
 }
 
 for name in active_configs:
+        if name =="DFRDependenceScore":
+            #Check for blocked index
+            number_of_blocks = int(subprocess.check_output('/work/terrier-core/bin/terrier indexstats | grep -q "^blocks: unknown"'.split()))
+            if number_of_blocks == 0:
+                raise Exception("Index was not built with --opts block.indexing=true")
+
+
+
 	config=configs[name]
 	opts = " ".join( [ k + " " + v for k,v in config.items() ] )
 	if "opts" in args.json:
