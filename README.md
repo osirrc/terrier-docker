@@ -1,8 +1,8 @@
-# Terrier OSIRRC Docker Image
+# OSIRRC Docker Image for Terrier
 
 [![Build Status](https://travis-ci.com/osirrc/terrier-docker.svg?branch=master)](https://travis-ci.com/osirrc/terrier-docker)
 [![Docker Cloud Build Status](https://img.shields.io/docker/cloud/build/osirrc2019/terrier.svg)](https://hub.docker.com/r/osirrc2019/terrier)
-[![DOI](https://zenodo.org/badge/177832180.svg)](https://zenodo.org/badge/latestdoi/177832180)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.3245211.svg)](https://doi.org/10.5281/zenodo.3245211)
 
 
 [**Arthur Câmara**](https://github.com/ArthurCamara) and [**Craig Macdonald**](https://github.com/cmacdonald)
@@ -50,6 +50,13 @@ python run.py search  \
 (PL2 + query expansion)
 
 	python run.py search  --repo terrier --collection robust04  --topic topics/topics.robust04.txt --qrels qrels/qrels.robust04.txt   --output /tmp/runs --opts config=pl2_qe
+  
+(DFRD)
+
+	python run.py search  --repo terrier --collection robust04  --topic topics/topics.robust04.txt --qrels qrels/qrels.robust04.txt   --output /tmp/runs --opts config=DFRD
+
+**NOTE:** for running DFRD, the index must be build using the `--opts=block.index=true` param
+
 
 ## Learning to Rank Runs
 
@@ -74,9 +81,9 @@ You will need to specify the `bm25_ltr_jforest` configuration.
 ## Expected Results
 
 ### robust04
-MAP                                     | BM25      | +QE  | PL2   | +QE   
-:---------------------------------------|-----------|-----------|-----------|-----------|
-[TREC 2004 Robust Track Topics](http://trec.nist.gov/data/robust/04.testset.gz)| 0.2363    | 0.2762    | 0.2241    | 0.2538
+MAP                                     | BM25      | +QE  | PL2   | +QE   | DRFD | +QE
+:---------------------------------------|-----------|-----------|-----------|-----------|-----------|
+[TREC 2004 Robust Track Topics](http://trec.nist.gov/data/robust/04.testset.gz)| 0.2363    | 0.2762    | 0.2241    | 0.2538 | 0.2479 |
 
 ### core18
 
