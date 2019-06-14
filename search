@@ -30,8 +30,8 @@ collection_name = args.json["collection"]["name"]
 active_configs=["bm25"]
 if "opts" in args.json and "config" in args.json["opts"]:
     active_configs = [args.json["opts"]["config"]]
-        print("Active configs are " + str(active_configs))
-        del args.json["opts"]["config"]
+    print("Active configs are " + str(active_configs))
+    del args.json["opts"]["config"]
 
 
 configs = { 
@@ -71,22 +71,22 @@ configs = {
 for name in active_configs:
     if name =="DFRDependenceScore":
         #Check for blocked index
-            blocked = subprocess.check_output('/work/terrier-core/bin/terrier indexstats -I /work/indexes/{}'.format(args.json['collection']['name']).split()).decode("utf-8").split("\n")[-2]== 'blocks: true'
-            if not blocked:
-                raise Exception("Index was not built with --opts block.indexing=true")
-        config=configs[name]
-        opts = " ".join( [ k + " " + v for k,v in config.items() ] )
-        if "opts" in args.json:
-            opts = opts + " ".join( [ k + " " + v for k,v in args.json["opts"].items() ] )
-        cmd="""/work/terrier-core/bin/terrier batchretrieve 
-            -I /work/indexes/{0}
-            -o /output/run.{0}.{1}.txt
-            {2}
-            -t {3}
-            -DTrecQueryTags.skip=DESC,NARR,DOM,HEAD,SMRY,CON,FAC,DEF
-            -Dtrec.querying.dump.settings=false
-            -Dtrec.output.format.length={4}
-            """.format(args.json['collection']['name'], name, opts, args.json['topic']['path'], args.json['top_k']).split()
-        print("Executing terrier cmd "+ " ".join(cmd))
-        subprocess.run(cmd, env=my_env)
-        #subprocess.run("""rm /output/run.{0}.{1}.txt.settings""".format(args.json['collection']['name'], name).split())
+        blocked = subprocess.check_output('/work/terrier-core/bin/terrier indexstats -I /work/indexes/{}'.format(args.json['collection']['name']).split()).decode("utf-8").split("\n")[-2]== 'blocks: true'
+        if not blocked:
+            raise Exception("Index was not built with --opts block.indexing=true")
+    config=configs[name]
+    opts = " ".join( [ k + " " + v for k,v in config.items() ] )
+    if "opts" in args.json:
+        opts = opts + " ".join( [ k + " " + v for k,v in args.json["opts"].items() ] )
+    cmd="""/work/terrier-core/bin/terrier batchretrieve 
+        -I /work/indexes/{0}
+        -o /output/run.{0}.{1}.txt
+        {2}
+        -t {3}
+        -DTrecQueryTags.skip=DESC,NARR,DOM,HEAD,SMRY,CON,FAC,DEF
+        -Dtrec.querying.dump.settings=false
+        -Dtrec.output.format.length={4}
+        """.format(args.json['collection']['name'], name, opts, args.json['topic']['path'], args.json['top_k']).split()
+    print("Executing terrier cmd "+ " ".join(cmd))
+    subprocess.run(cmd, env=my_env)
+    #subprocess.run("""rm /output/run.{0}.{1}.txt.settings""".format(args.json['collection']['name'], name).split())
