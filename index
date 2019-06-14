@@ -66,9 +66,9 @@ for collection in args.json["collections"]:
     block_index = False
     opts=""
     if "opts" in args.json:
-        if "block" in args.json["opts"]:
+        if "block.indexing" in args.json["opts"] and args.json['opts']['block.indexing'] == 'true':
             block_index=True
-            del args.json['opts']['block']
+            del args.json['opts']['block.indexing']
         opts = opts + " ".join( ["-D"+k+"="+v for k, v in args.json["opts"].items()]  )
         print(opts)  
     subprocess.run("""
