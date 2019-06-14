@@ -84,7 +84,7 @@ You will need to specify the `bm25_ltr_jforest` configuration.
 
 MAP                                     | BM25      | +QE       | PL2       | +QE       | DRFD      | +QE
 :---------------------------------------|-----------|-----------|-----------|-----------|-----------|-----------|
-[TREC 2004 Robust Track Topics](http://trec.nist.gov/data/robust/04.testset.gz)| 0.2363    | 0.2762    | 0.2241    | 0.2538 | 0.2479 |
+[TREC 2004 Robust Track Topics](http://trec.nist.gov/data/robust/04.testset.gz)| 0.2363    | 0.2762    | 0.2241    | 0.2538 | 0.2479 | 0.2821
 
 ### core18
 
