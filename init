@@ -33,5 +33,5 @@ else:
   open("terrier-project-{0}-bin.tar".format(version), 'wb').write(response.content)
   subprocess.run("tar -xf /work/terrier-project-{0}-bin.tar -C /work".format(version).split())
   subprocess.run("ln -s /work/terrier-project-{0}/ /work/terrier-core".format(version).split())
-
-subprocess.run("/work/terrier-core/bin/terrier")
+  
+  subprocess.run("/work/terrier-core/bin/terrier")
