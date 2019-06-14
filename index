@@ -25,39 +25,39 @@ if not os.path.isdir("/work/indexes"):
 
 
 index_options = {
-		#http://ir.dcs.gla.ac.uk/wiki/Terrier/Disks1%262
+        #http://ir.dcs.gla.ac.uk/wiki/Terrier/Disks1%262
         "robust04" : {"terrier.mvn.coords": "org.apache.commons:commons-compress:1.18",
-                      "files.mappings":"z:org.apache.commons.compress.compressors.z.ZCompressorInputStream:null," + 
-						"0z:org.apache.commons.compress.compressors.z.ZCompressorInputStream:null," + 
-						"1z:org.apache.commons.compress.compressors.z.ZCompressorInputStream:null," +
-						"2z:org.apache.commons.compress.compressors.z.ZCompressorInputStream:null",
-                      "TrecDocTags.process":"TEXT,H3,DOCTITLE,HEADLINE,TTL"},
-		#http://ir.dcs.gla.ac.uk/wiki/Terrier/DOTGOV2
-		"gov2" : {"trec.collection.class":"TRECWebCollection",
-				  "indexer.meta.forward.keys":"docno,url",
-				  "indexer.meta.forward.keylens":"26,256",
-       			"metaindex.compressed.crop.long":"true"
-			},
-		#http://ir.dcs.gla.ac.uk/wiki/Terrier/ClueWeb09-B
-		"cw09b" : {
-			"trec.collection.class":"WARC018Collection",
-			"indexer.meta.forward.keys":"docno,url",
-			"indexer.meta.forward.keylens":"26,256",
-			"indexer.meta.reverse.keys":"docno",
-			"metaindex.compressed.crop.long":"true"},
-		#http://ir.dcs.gla.ac.uk/wiki/Terrier/ClueWeb12
-		"cw12b" : {
+            "files.mappings":"z:org.apache.commons.compress.compressors.z.ZCompressorInputStream:null," + 
+            "0z:org.apache.commons.compress.compressors.z.ZCompressorInputStream:null," + 
+            "1z:org.apache.commons.compress.compressors.z.ZCompressorInputStream:null," +
+            "2z:org.apache.commons.compress.compressors.z.ZCompressorInputStream:null",
+            "TrecDocTags.process":"TEXT,H3,DOCTITLE,HEADLINE,TTL"},
+        #http://ir.dcs.gla.ac.uk/wiki/Terrier/DOTGOV2
+        "gov2" : {"trec.collection.class":"TRECWebCollection",
+            "indexer.meta.forward.keys":"docno,url",
+            "indexer.meta.forward.keylens":"26,256",
+            "metaindex.compressed.crop.long":"true"
+            },
+        #http://ir.dcs.gla.ac.uk/wiki/Terrier/ClueWeb09-B
+        "cw09b" : {
+            "trec.collection.class":"WARC018Collection",
+            "indexer.meta.forward.keys":"docno,url",
+            "indexer.meta.forward.keylens":"26,256",
+            "indexer.meta.reverse.keys":"docno",
+            "metaindex.compressed.crop.long":"true"},
+        #http://ir.dcs.gla.ac.uk/wiki/Terrier/ClueWeb12
+        "cw12b" : {
             "trec.collection.class":"WARC10Collection",
             "indexer.meta.forward.keys":"docno,url",
             "indexer.meta.forward.keylens":"26,256",
             "indexer.meta.reverse.keys":"docno",
             "metaindex.compressed.crop.long":"true"},
-		"core18" : {
-			"terrier.mvn.coords":"uk.ac.gla.dcs.terrierteam:terrier-wapo:0.1",
-			"trec.collection.class":"uk.ac.gla.terrier.indexing.WAPOCollection",
-			"indexer.meta.forward.keylens":"40"
-		}
-}
+        "core18" : {
+            "terrier.mvn.coords":"uk.ac.gla.dcs.terrierteam:terrier-wapo:0.1",
+            "trec.collection.class":"uk.ac.gla.terrier.indexing.WAPOCollection",
+            "indexer.meta.forward.keylens":"40"
+            }
+        }
 
 print(args.json["opts"])
 for collection in args.json["collections"]:
@@ -80,11 +80,11 @@ for collection in args.json["collections"]:
 
     #grep out congressional record
     if name == "robust04":
-	    subprocess.run(["/bin/sh", "-c", "egrep -vi 'cr93|read|dtd' /work/terrier-core/etc/collection.spec > /work/terrier-core/etc/collection.spec.new; mv /work/terrier-core/etc/collection.spec.new /work/terrier-core/etc/collection.spec"], env=my_env)
+        subprocess.run(["/bin/sh", "-c", "egrep -vi 'cr93|read|dtd' /work/terrier-core/etc/collection.spec > /work/terrier-core/etc/collection.spec.new; mv /work/terrier-core/etc/collection.spec.new /work/terrier-core/etc/collection.spec"], env=my_env)
 
     print("Files to index...")
     subprocess.run(["wc", "-l", "/work/terrier-core/etc/collection.spec"])
-    
+
 
     cmd="""
         /work/terrier-core/bin/terrier batchindexing -p

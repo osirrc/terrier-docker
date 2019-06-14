@@ -56,10 +56,16 @@ configs = {
 		"-Dfat.matching.learned.jforest.model=/output/ensemble.txt" : "",
 		"-Dfat.matching.learned.jforest.statistics=/output/jforests-feature-stats.txt" : ""
 	},
-        "DFRDependenceScore":{
+        "DFRD":{
             "-Dmatching.dsms" : "DFRDependenceScoreModifier",
             "-Dproximity.dependency.type" : "SD"
-        }
+        },
+            
+        "DFRD_qe":{
+            "-Dmatching.dsms" : "DFRDependenceScoreModifier",
+            "-Dproximity.dependency.type" : "SD",
+            "-q", ""
+            }
 }
 
 for name in active_configs:
