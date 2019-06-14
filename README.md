@@ -2,8 +2,7 @@
 
 [![Build Status](https://travis-ci.com/osirrc/terrier-docker.svg?branch=master)](https://travis-ci.com/osirrc/terrier-docker)
 [![Docker Cloud Build Status](https://img.shields.io/docker/cloud/build/osirrc2019/terrier.svg)](https://hub.docker.com/r/osirrc2019/terrier)
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.3245211.svg)](https://doi.org/10.5281/zenodo.3245211)
-
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.3245210.svg)](https://doi.org/10.5281/zenodo.3245210)
 
 [**Arthur Câmara**](https://github.com/ArthurCamara) and [**Craig Macdonald**](https://github.com/cmacdonald)
 
