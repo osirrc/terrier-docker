@@ -24,11 +24,11 @@ The following `jig` command can be used to perform a retrieval run on the collec
 
 ```
 python run.py search  \
-	--repo osirrc2019/terrier\ 
+	--repo osirrc2019/terrier\
 	--collection robust04 \
 	--topic topics/topics.robust04.txt \
-	--qrels qrels/qrels.robust04.txt\ 
-	--output /tmp/runs 
+	--qrels qrels/qrels.robust04.txt\
+	--output /tmp/runs
 ```
 
 
@@ -36,7 +36,7 @@ python run.py search  \
 
 (BM25)
 
-	python run.py search  --repo terrier --collection robust04  --topic topics/topics.robust04.txt --qrels qrels/qrels.robust04.txt   --output /tmp/runs 
+	python run.py search  --repo terrier --collection robust04  --topic topics/topics.robust04.txt --qrels qrels/qrels.robust04.txt   --output /tmp/runs
 
 (BM25 + query expansion)
 
@@ -49,7 +49,7 @@ python run.py search  \
 (PL2 + query expansion)
 
 	python run.py search  --repo terrier --collection robust04  --topic topics/topics.robust04.txt --qrels qrels/qrels.robust04.txt   --output /tmp/runs --opts config=pl2_qe
-  
+
 (DFRD)
 
 	python run.py search  --repo terrier --collection robust04  --topic topics/topics.robust04.txt --qrels qrels/qrels.robust04.txt   --output /tmp/runs --opts config=DFRD
@@ -76,19 +76,17 @@ You need to specify the features to be used by Terrier - see http://terrier.org/
 You will need to specify the `bm25_ltr_jforest` configuration.
 
 	python run.py search  --repo terrier --collection robust04  --topic topics/topics.robust04.txt --qrels qrels/qrels.robust04.txt   --output /tmp/runs --opts config=bm25_ltr_jforest
-	
+
 ## Expected Results
 
 ### robust04
 
-MAP                                     | BM25      | +QE       | PL2       | +QE       | DRFD      | +QE
+MAP                                     | BM25      | +QE       | +Prox     | +Prox + QE| DPH | + QE | +Prox | +Prox +QE |  PL2       | +QE       |
 :---------------------------------------|-----------|-----------|-----------|-----------|-----------|-----------|
-[TREC 2004 Robust Track Topics](http://trec.nist.gov/data/robust/04.testset.gz)| 0.2363    | 0.2762    | 0.2241    | 0.2538 | 0.2479 | 0.2821
+[TREC 2004 Robust Track Topics](http://trec.nist.gov/data/robust/04.testset.gz)| 0.2363 |  0.2762 | 0.2404 | 0.2781  |0.2479|0.2821| 0.2501| 0.2869| 0.2241 | 0.2538
 
 ### core18
 
-MAP                                     | BM25      | +QE  | PL2   | +QE   
+MAP                                     | BM25      | +QE   | +Prox     | +Prox + QE| DPH | + QE | +Prox | +Prox +QE | PL2   | +QE   
 :---------------------------------------|-----------|-----------|-----------|-----------|
-[TREC 2018 Common Core Track Topics](https://trec.nist.gov/data/core/topics2018.txt)| 0.2326    | 0.2975    | 0.2225    | 0.2728
-
-
+[TREC 2018 Common Core Track Topics](https://trec.nist.gov/data/core/topics2018.txt)| 0.2326    | 0.2975   |0.2369 | 0.2960| 0.2427|0.3055|0.2428|0.3035 | 0.2225    | 0.2728
