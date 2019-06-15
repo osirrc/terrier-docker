@@ -5,6 +5,7 @@ import subprocess
 import os
 import json
 import psutil
+import re
 
 print("Searching...")
 
@@ -37,8 +38,12 @@ if "opts" in args.json and "config" in args.json["opts"]:
 configs = { 
         "bm25" : {"-w" : "BM25"},
         "pl2"  : {"-w" : "PL2"},
+		"dph"  : {"-w" : "DPH"},
+		"ql"  : {"-w" : "DirichletLM"},
         "bm25_qe" : {"-w" : "BM25", "-q" : ""},
         "pl2_qe" : {"-w" : "PL2", "-q" : ""},
+		"dph_qe" : {"-w" : "DPH", "-q" : ""},
+		"ql_qe"  : {"-w" : "DirichletLM", "-q" : ""},
         "bm25_ltr_features" : { 
             "-w" : "BM25", 
             "-c" : "labels:on", 
@@ -56,23 +61,57 @@ configs = {
             "-Dfat.matching.learned.jforest.model=/output/ensemble.txt" : "",
             "-Dfat.matching.learned.jforest.statistics=/output/jforests-feature-stats.txt" : ""
             },
-        "DFRD":{
-            "-Dmatching.dsms" : "DFRDependenceScoreModifier",
-            "-Dproximity.dependency.type" : "SD"
+        "bm25_prox":{
+			"-w" : "BM25",
+            "-Dmatching.dsms=DFRDependenceScoreModifier" : "",
+            "-Dproximity.dependency.type=SD" : "",
             },
-
-        "DFRD_qe":{
-            "-Dmatching.dsms" : "DFRDependenceScoreModifier",
-            "-Dproximity.dependency.type" : "SD",
+		"bm25_prox_qe":{
+            "-w" : "BM25",
+            "-Dmatching.dsms=DFRDependenceScoreModifier" : "",
+            "-Dproximity.dependency.type=SD" : "",
+			"-q": ""
+            },
+		"pl2_prox":{
+            "-w" : "PL2",
+            "-Dmatching.dsms=DFRDependenceScoreModifier" : "",
+            "-Dproximity.dependency.type=SD" : ""
+            },
+        "pl2_prox_qe":{
+            "-w" : "PL2",
+            "-Dmatching.dsms=DFRDependenceScoreModifier" : "",
+            "-Dproximity.dependency.type=SD" : "",
             "-q": ""
-            }
+            },
+		"dph_prox":{
+            "-w" : "DPH",
+            "-Dmatching.dsms=DFRDependenceScoreModifier" : "",
+            "-Dproximity.dependency.type=SD" : ""
+            },
+        "dph_prox_qe":{
+            "-w" : "DPH",
+            "-Dmatching.dsms=DFRDependenceScoreModifier" : "",
+            "-Dproximity.dependency.type=SD" : "",
+            "-q": ""
+            },
+		"ql_prox":{
+            "-w" : "DirichletLM",
+            "-Dmatching.dsms" : "MRFDependenceScoreModifier",
+            "-Dproximity.dependency.type=SD" : "",
+            },
+        "ql_prox_qe":{
+            "-w" : "DirichletLM",
+            "-Dmatching.dsms" : "MRFDependenceScoreModifier",
+            "-Dproximity.dependency.type=SD" : "",
+            "-q": "" 
+            },	
         }
 
 for name in active_configs:
-    if name =="DFRDependenceScore":
-        #Check for blocked index
-        blocked = subprocess.check_output('/work/terrier-core/bin/terrier indexstats -I /work/indexes/{}'.format(args.json['collection']['name']).split()).decode("utf-8").split("\n")[-2]== 'blocks: true'
-        if not blocked:
+    if re.match(r"prox", name):
+        #Check for blocks (positions) index
+        blocks = subprocess.check_output('/work/terrier-core/bin/terrier indexstats -I /work/indexes/{}'.format(args.json['collection']['name']).split()).decode("utf-8").split("\n")[-2]== 'blocks: true'
+        if not blocks:
             raise Exception("Index was not built with --opts block.indexing=true")
     config=configs[name]
     opts = " ".join( [ k + " " + v for k,v in config.items() ] )
