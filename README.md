@@ -90,15 +90,15 @@ MAP                                     | BM25      | +QE       | +Prox     | +P
 
 MAP                                     | BM25      | +QE   | +Prox     | +Prox + QE| DPH | + QE | +Prox | +Prox +QE | PL2   | +QE   
 :---------------------------------------|-----------|-----------|-----------|-----------|-----------|-----------|-----------|-----------|-----------|-----------|
-[TREC 2018 Common Core Track Topics](https://trec.nist.gov/data/core/topics2018.txt)| 0.2326    | 0.2975   |0.2369 | 0.2960| 0.2427|0.3055|0.2428|0.3035 | 0.2225    | 0.2728
+[TREC 2018 Common Core Track Topics](https://trec.nist.gov/data/core/topics2018.txt) |0.2326|0.2975|0.2369|0.2960|0.2427|0.3055|0.2428|0.3035 |0.2225| 0.2728
 
 ### GOV2
 
 MAP                                     | BM25      | +QE   | +Prox     | +Prox + QE| DPH | + QE | +Prox | +Prox +QE | PL2   | +QE   
 :---------------------------------------|-----------|-----------|-----------|-----------|-----------|-----------|-----------|-----------|-----------|-----------|
-[TREC 2004 Terabyte Track: Topics 701-750](http://trec.nist.gov/data/terabyte04.html) |0.2461|0.2621|||0.2804|0.3120|||0.2334|0.2478
-[TREC 2005 Terabyte Track: Topics 751-800](http://trec.nist.gov/data/terabyte05.html) |0.3081|0.3506|||0.3311|0.3754|||0.2884|0.3160
-[TREC 2006 Terabyte Track: Topics 801-850](http://trec.nist.gov/data/terabyte06.html) |0.2629|0.3118|||0.2917|0.3494|||0.2363|0.2739
+[TREC 2004 Terabyte Track: Topics 701-750](http://trec.nist.gov/data/terabyte04.html) |0.2461|0.2621|0.2537|0.2715|0.2804|0.3120|0.2834|0.3064|0.2334|0.2478
+[TREC 2005 Terabyte Track: Topics 751-800](http://trec.nist.gov/data/terabyte05.html) |0.3081|0.3506|0.3126| 0.3507|0.3311|0.3754|0.3255|0.3095|0.2884|0.3160
+[TREC 2006 Terabyte Track: Topics 801-850](http://trec.nist.gov/data/terabyte06.html) |0.2629|0.3118|0.2724|0.3085|0.2917|0.3494|0.2904|0.3288|0.2363|0.2739
 
 
 ## Reviews
