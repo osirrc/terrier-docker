@@ -37,7 +37,7 @@ python run.py search  \
 
 This image supports the following weighting models: BM25 (`bm25`), PL2 (`pl2`) and `DPH` (`dph`). 
 
-Additionally, it supports Query Expansion and Proximity-based (DFRD) search, by including `qe`, `prox` or `prox_qe` to the `--opts config` argument: `--opts config=<retrieval_model>_qe`, `--opts config=<retrieval_model>_prox` or `--opts config=<retrieval_model>_prox_qe`:
+Additionally, it supports Query Expansion and Proximity-based (DFRD) search, by including `qe`, `prox` or `prox_qe` to the `--opts config` argument: `--opts config=<retrieval_model>_<extra>`:
 
 (BM25)
 
