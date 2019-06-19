@@ -35,13 +35,25 @@ python run.py search  \
 
 ## Retrieval Methods:
 
+This image supports the following weighting models: BM25 (`bm25`), PL2 (`pl2`) and `DPH` (`dph`). 
+
+Additionally, it supports Query Expansion and Proximity-based (DFRD) search, by including `qe`, `prox` or `prox_qe` to the `--opts config` argument: `--opts config=<retrieval_model>_qe`, `--opts config=<retrieval_model>_prox` or `--opts config=<retrieval_model>_prox_qe`:
+
 (BM25)
 
-	python run.py search  --repo osirrc2019/terrier --tag v0.1.5 --collection robust04  --topic topics/topics.robust04.txt --qrels qrels/qrels.robust04.txt   --output /tmp/runs
+	python run.py search  --repo osirrc2019/terrier --tag v0.1.5 --collection robust04  --topic topics/topics.robust04.txt --qrels qrels/qrels.robust04.txt   --output /tmp/runs --opts config=bm25
 
 (BM25 + query expansion)
 
 	python run.py search  --repo osirrc2019/terrier --tag v0.1.5 --collection robust04  --topic topics/topics.robust04.txt --qrels qrels/qrels.robust04.txt   --output /tmp/runs --opts config=bm25_qe
+
+(BM25 + Proximity)
+
+	python run.py search  --repo osirrc2019/terrier --tag v0.1.5 --collection robust04  --topic topics/topics.robust04.txt --qrels qrels/qrels.robust04.txt   --output /tmp/runs --opts config=bm25_prox
+
+(BM25 + Proximity + query expansion)
+
+	python run.py search  --repo osirrc2019/terrier --tag v0.1.5 --collection robust04  --topic topics/topics.robust04.txt --qrels qrels/qrels.robust04.txt   --output /tmp/runs --opts config=bm25_prox_qe
 
 (PL2)
 
@@ -51,11 +63,32 @@ python run.py search  \
 
 	python run.py search  --repo osirrc2019/terrier --tag v0.1.5 --collection robust04  --topic topics/topics.robust04.txt --qrels qrels/qrels.robust04.txt   --output /tmp/runs --opts config=pl2_qe
 
-(DFRD)
+(PL2 + Proximity)
 
-	python run.py search  --repo osirrc2019/terrier --tag v0.1.5 --collection robust04  --topic topics/topics.robust04.txt --qrels qrels/qrels.robust04.txt   --output /tmp/runs --opts config=DFRD
+	python run.py search  --repo osirrc2019/terrier --tag v0.1.5 --collection robust04  --topic topics/topics.robust04.txt --qrels qrels/qrels.robust04.txt   --output /tmp/runs --opts config=pl2_prox
 
-**NOTE:** for running DFRD, the index must be build using the `--opts=block.index=true` param
+(PL2 + Proximity + query expansion)
+
+	python run.py search  --repo osirrc2019/terrier --tag v0.1.5 --collection robust04  --topic topics/topics.robust04.txt --qrels qrels/qrels.robust04.txt   --output /tmp/runs --opts config=pl2_prox_qe
+
+
+(DPH)
+
+	python run.py search  --repo osirrc2019/terrier --tag v0.1.5 --collection robust04  --topic topics/topics.robust04.txt --qrels qrels/qrels.robust04.txt   --output /tmp/runs --opts config=dph
+	
+(DPH + query expansion)
+
+	python run.py search  --repo osirrc2019/terrier --tag v0.1.5 --collection robust04  --topic topics/topics.robust04.txt --qrels qrels/qrels.robust04.txt   --output /tmp/runs --opts config=dph_qe
+
+(DPH + Proximity)
+
+	python run.py search  --repo osirrc2019/terrier --tag v0.1.5 --collection robust04  --topic topics/topics.robust04.txt --qrels qrels/qrels.robust04.txt   --output /tmp/runs --opts config=dph_prox
+	
+(DPH + Proximity + query expansion)
+
+	python run.py search  --repo osirrc2019/terrier --tag v0.1.5 --collection robust04  --topic topics/topics.robust04.txt --qrels qrels/qrels.robust04.txt   --output /tmp/runs --opts config=dph_prox_qe
+
+**NOTE:** for running DFRD (Proximity-based model), the index must be build using the `--opts=block.index=true` param
 
 
 ## Learning to Rank Runs
