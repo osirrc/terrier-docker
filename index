@@ -81,6 +81,9 @@ for collection in args.json["collections"]:
     #grep out congressional record
     if name == "robust04":
         subprocess.run(["/bin/sh", "-c", "egrep -vi 'cr93|read|dtd' /work/terrier-core/etc/collection.spec > /work/terrier-core/etc/collection.spec.new; mv /work/terrier-core/etc/collection.spec.new /work/terrier-core/etc/collection.spec"], env=my_env)
+    #grep out non-json files
+    if name == "core18":
+        subprocess.run(["/bin/sh", "-c", "egrep -vi 'md5sum|scripts' /work/terrier-core/etc/collection.spec > /work/terrier-core/etc/collection.spec.new; mv /work/terrier-core/etc/collection.spec.new /work/terrier-core/etc/collection.spec"], env=my_env)
 
     print("Files to index...")
     subprocess.run(["wc", "-l", "/work/terrier-core/etc/collection.spec"])
