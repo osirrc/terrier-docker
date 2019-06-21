@@ -11,13 +11,14 @@ This image is available on [Docker Hub](https://hub.docker.com/r/osirrc2019/terr
 
 + Supported test collections: `robust04`, `gov2`, `cw09b`, `cw12b` (web), `core18` (newswire)
 + Supported hooks: `init`, `index`, `train`, `search`
++ Check the most current release version at the (https://github.com/osirrc/terrier-docker/releases)[Releases] page, and replace `x.y.z` with the most current tag.
 
 ## Quick Start
 
 The following `jig` command can be used to index TREC disks 4/5 for `robust04`:
 
 ```
-python run.py prepare --repo osirrc2019/terrier --tag v0.1.5 --collections robust04=/tmp/disk45/=trectext
+python run.py prepare --repo osirrc2019/terrier --tag vx.y.z --collections robust04=/tmp/disk45/=trectext
 ```
 
 The following `jig` command can be used to perform a retrieval run on the collection with the `robust04` test collection, using BM25 as ranker:
@@ -41,52 +42,52 @@ Additionally, it supports Query Expansion and Proximity-based (DFRD) search, by 
 
 (BM25)
 
-	python run.py search  --repo osirrc2019/terrier --tag v0.1.6 --collection robust04  --topic topics/topics.robust04.txt --qrels qrels/qrels.robust04.txt   --output /tmp/runs --opts config=bm25
+	python run.py search  --repo osirrc2019/terrier --tag vx.y.z --collection robust04  --topic topics/topics.robust04.txt --qrels qrels/qrels.robust04.txt   --output /tmp/runs --opts config=bm25
 
 (BM25 + query expansion)
 
-	python run.py search  --repo osirrc2019/terrier --tag v0.1.6 --collection robust04  --topic topics/topics.robust04.txt --qrels qrels/qrels.robust04.txt   --output /tmp/runs --opts config=bm25_qe
+	python run.py search  --repo osirrc2019/terrier --tag vx.y.z --collection robust04  --topic topics/topics.robust04.txt --qrels qrels/qrels.robust04.txt   --output /tmp/runs --opts config=bm25_qe
 
 (BM25 + Proximity)
 
-	python run.py search  --repo osirrc2019/terrier --tag v0.1.6 --collection robust04  --topic topics/topics.robust04.txt --qrels qrels/qrels.robust04.txt   --output /tmp/runs --opts config=bm25_prox
+	python run.py search  --repo osirrc2019/terrier --tag vx.y.z --collection robust04  --topic topics/topics.robust04.txt --qrels qrels/qrels.robust04.txt   --output /tmp/runs --opts config=bm25_prox
 
 (BM25 + Proximity + query expansion)
 
-	python run.py search  --repo osirrc2019/terrier --tag v0.1.6 --collection robust04  --topic topics/topics.robust04.txt --qrels qrels/qrels.robust04.txt   --output /tmp/runs --opts config=bm25_prox_qe
+	python run.py search  --repo osirrc2019/terrier --tag vx.y.z --collection robust04  --topic topics/topics.robust04.txt --qrels qrels/qrels.robust04.txt   --output /tmp/runs --opts config=bm25_prox_qe
 
 (PL2)
 
-	python run.py search  --repo osirrc2019/terrier --tag v0.1.6 --collection robust04  --topic topics/topics.robust04.txt --qrels qrels/qrels.robust04.txt   --output /tmp/runs --opts config=pl2
+	python run.py search  --repo osirrc2019/terrier --tag vx.y.z --collection robust04  --topic topics/topics.robust04.txt --qrels qrels/qrels.robust04.txt   --output /tmp/runs --opts config=pl2
 
 (PL2 + query expansion)
 
-	python run.py search  --repo osirrc2019/terrier --tag v0.1.6 --collection robust04  --topic topics/topics.robust04.txt --qrels qrels/qrels.robust04.txt   --output /tmp/runs --opts config=pl2_qe
+	python run.py search  --repo osirrc2019/terrier --tag vx.y.z --collection robust04  --topic topics/topics.robust04.txt --qrels qrels/qrels.robust04.txt   --output /tmp/runs --opts config=pl2_qe
 
 (PL2 + Proximity)
 
-	python run.py search  --repo osirrc2019/terrier --tag v0.1.6 --collection robust04  --topic topics/topics.robust04.txt --qrels qrels/qrels.robust04.txt   --output /tmp/runs --opts config=pl2_prox
+	python run.py search  --repo osirrc2019/terrier --tag vx.y.z --collection robust04  --topic topics/topics.robust04.txt --qrels qrels/qrels.robust04.txt   --output /tmp/runs --opts config=pl2_prox
 
 (PL2 + Proximity + query expansion)
 
-	python run.py search  --repo osirrc2019/terrier --tag v0.1.6 --collection robust04  --topic topics/topics.robust04.txt --qrels qrels/qrels.robust04.txt   --output /tmp/runs --opts config=pl2_prox_qe
+	python run.py search  --repo osirrc2019/terrier --tag vx.y.z --collection robust04  --topic topics/topics.robust04.txt --qrels qrels/qrels.robust04.txt   --output /tmp/runs --opts config=pl2_prox_qe
 
 
 (DPH)
 
-	python run.py search  --repo osirrc2019/terrier --tag v0.1.6 --collection robust04  --topic topics/topics.robust04.txt --qrels qrels/qrels.robust04.txt   --output /tmp/runs --opts config=dph
+	python run.py search  --repo osirrc2019/terrier --tag vx.y.z --collection robust04  --topic topics/topics.robust04.txt --qrels qrels/qrels.robust04.txt   --output /tmp/runs --opts config=dph
 	
 (DPH + query expansion)
 
-	python run.py search  --repo osirrc2019/terrier --tag v0.1.6 --collection robust04  --topic topics/topics.robust04.txt --qrels qrels/qrels.robust04.txt   --output /tmp/runs --opts config=dph_qe
+	python run.py search  --repo osirrc2019/terrier --tag vx.y.z --collection robust04  --topic topics/topics.robust04.txt --qrels qrels/qrels.robust04.txt   --output /tmp/runs --opts config=dph_qe
 
 (DPH + Proximity)
 
-	python run.py search  --repo osirrc2019/terrier --tag v0.1.6 --collection robust04  --topic topics/topics.robust04.txt --qrels qrels/qrels.robust04.txt   --output /tmp/runs --opts config=dph_prox
+	python run.py search  --repo osirrc2019/terrier --tag vx.y.z --collection robust04  --topic topics/topics.robust04.txt --qrels qrels/qrels.robust04.txt   --output /tmp/runs --opts config=dph_prox
 	
 (DPH + Proximity + query expansion)
 
-	python run.py search  --repo osirrc2019/terrier --tag v0.1.6 --collection robust04  --topic topics/topics.robust04.txt --qrels qrels/qrels.robust04.txt   --output /tmp/runs --opts config=dph_prox_qe
+	python run.py search  --repo osirrc2019/terrier --tag vx.y.z --collection robust04  --topic topics/topics.robust04.txt --qrels qrels/qrels.robust04.txt   --output /tmp/runs --opts config=dph_prox_qe
 
 **NOTE:** for running DFRD (Proximity-based model), the index must be build using the `--opts=block.index=true` param
 
@@ -97,19 +98,19 @@ Learning-to-rank will typically require that the index has more information, e.g
 
 ### Indexing:
 
-	python run.py prepare     --repo osirrc2019/terrier --tag v0.1.5   --collections robust04=/tmp/disk45/=trectext --opts "FieldTags.process=HEADLINE"
+	python run.py prepare     --repo osirrc2019/terrier --tag vx.y.z   --collections robust04=/tmp/disk45/=trectext --opts "FieldTags.process=HEADLINE"
 
 ### Training:
 
 You need to specify the features to be used by Terrier - see http://terrier.org/docs/v5.1/learning.html for more information about Terrier feature definitions.
 
-	python run.py train  --repo osirrc2019/terrier --tag v0.1.5 --collection robust04  --topic topics/topics.robust04.txt --qrels qrels/qrels.robust04.txt    --test_split $PWD/sample_training_validation_query_ids/robust04_test.txt  --validation_split $PWD/sample_training_validation_query_ids/robust04_validation.txt --model_folder /tmp/runs --opts features="SAMPLE;WMODEL:SingleFieldModel(BM25,0);QI:SingleFieldModel(Dl,0)"
+	python run.py train  --repo osirrc2019/terrier --tag vx.y.z --collection robust04  --topic topics/topics.robust04.txt --qrels qrels/qrels.robust04.txt    --test_split $PWD/sample_training_validation_query_ids/robust04_test.txt  --validation_split $PWD/sample_training_validation_query_ids/robust04_validation.txt --model_folder /tmp/runs --opts features="SAMPLE;WMODEL:SingleFieldModel(BM25,0);QI:SingleFieldModel(Dl,0)"
 
 ### Retrieval:
 
 You will need to specify the `bm25_ltr_jforest` configuration.
 
-	python run.py search  --repo osirrc2019/terrier --tag v0.1.5 --collection robust04  --topic topics/topics.robust04.txt --qrels qrels/qrels.robust04.txt   --output /tmp/runs --opts config=bm25_ltr_jforest
+	python run.py search  --repo osirrc2019/terrier --tag vx.y.z --collection robust04  --topic topics/topics.robust04.txt --qrels qrels/qrels.robust04.txt   --output /tmp/runs --opts config=bm25_ltr_jforest
 
 ## Expected Results
 
