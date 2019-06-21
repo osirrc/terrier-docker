@@ -26,7 +26,7 @@ The following `jig` command can be used to perform a retrieval run on the collec
 ```
 python run.py search  \
 	--repo osirrc2019/terrier \
-	--tag v0.1.5 \
+	--tag vx.y.z \
 	--collection robust04 \
 	--topic topics/topics.robust04.txt \
 	--qrels qrels/qrels.robust04.txt\
