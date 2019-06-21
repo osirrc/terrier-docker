@@ -137,3 +137,4 @@ MAP                                     | BM25      | +QE   | +Prox     | +Prox 
 
 ## Reviews
 + Documentation reviewed at commit [`0b13139`](https://github.com/osirrc/terrier-docker/commit/c09730fab75e9c4ff892cb9dc5d6b7a500b13139) (2019-06-16) by [Ryan Clancy](https://github.com/r-clancy/).
++ Documentation reviewed at commit [`9700a36`](https://github.com/osirrc/terrier-docker/commit/c00dcefc4dc19aae25426013a65bb04b79700a36) (2019-06-21) by [Ryan Clancy](https://github.com/r-clancy/).
