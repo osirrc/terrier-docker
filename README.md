@@ -89,7 +89,7 @@ Additionally, it supports Query Expansion and Proximity-based (DFRD) search, by 
 
 	python run.py search  --repo osirrc2019/terrier --tag vx.y.z --collection robust04  --topic topics/topics.robust04.txt --qrels qrels/qrels.robust04.txt   --output /tmp/runs --opts config=dph_prox_qe
 
-**NOTE:** for running DFRD (Proximity-based model), the index must be build using the `--opts=block.index=true` param
+**NOTE:** for running DFRD (Proximity-based model), the index must be build using the `--opts=block.indexing=true` param
 
 
 ## Learning to Rank Runs
