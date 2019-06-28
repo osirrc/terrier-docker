@@ -1,4 +1,17 @@
 #!/bin/bash
 
+#this assumes only one index present in the container
+INDEXPATH=/work/indexes/*/
+
+#terrier-platform based UIs
+cd /work/terrier-core
+
+#start the simple web based UI
+bin/terrier -Dterrier.index.path=$INDEXPATH http 1980  src/webapps/simple/ & 
+
+#start the REST server
+bin/terrier rest-singleindex -I $INDEXPATH/data.properties 1981 &
+
+#start the notebooks
 cd /notebooks
 jupyter notebook --port=1982 --allow-root --ip=0.0.0.0
