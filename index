@@ -25,67 +25,74 @@ if not os.path.isdir("/work/indexes"):
 
 
 index_options = {
-		#http://ir.dcs.gla.ac.uk/wiki/Terrier/Disks1%262
+        #http://ir.dcs.gla.ac.uk/wiki/Terrier/Disks1%262
         "robust04" : {"terrier.mvn.coords": "org.apache.commons:commons-compress:1.18",
-                      "files.mappings":"z:org.apache.commons.compress.compressors.z.ZCompressorInputStream:null," + 
-						"0z:org.apache.commons.compress.compressors.z.ZCompressorInputStream:null," + 
-						"1z:org.apache.commons.compress.compressors.z.ZCompressorInputStream:null," +
-						"2z:org.apache.commons.compress.compressors.z.ZCompressorInputStream:null",
-                      "TrecDocTags.process":"TEXT,H3,DOCTITLE,HEADLINE,TTL"},
-		#http://ir.dcs.gla.ac.uk/wiki/Terrier/DOTGOV2
-		"gov2" : {"trec.collection.class":"TRECWebCollection",
-				  "indexer.meta.forward.keys":"docno,url",
-				  "indexer.meta.forward.keylens":"26,256",
-       			"metaindex.compressed.crop.long":"true"
-			},
-		#http://ir.dcs.gla.ac.uk/wiki/Terrier/ClueWeb09-B
-		"cw09b" : {
-			"trec.collection.class":"WARC018Collection",
-			"indexer.meta.forward.keys":"docno,url",
-			"indexer.meta.forward.keylens":"26,256",
-			"indexer.meta.reverse.keys":"docno",
-			"metaindex.compressed.crop.long":"true"},
-		#http://ir.dcs.gla.ac.uk/wiki/Terrier/ClueWeb12
-		"cw12b" : {
+            "files.mappings":"z:org.apache.commons.compress.compressors.z.ZCompressorInputStream:null," + 
+            "0z:org.apache.commons.compress.compressors.z.ZCompressorInputStream:null," + 
+            "1z:org.apache.commons.compress.compressors.z.ZCompressorInputStream:null," +
+            "2z:org.apache.commons.compress.compressors.z.ZCompressorInputStream:null",
+            "TrecDocTags.process":"TEXT,H3,DOCTITLE,HEADLINE,TTL"},
+        #http://ir.dcs.gla.ac.uk/wiki/Terrier/DOTGOV2
+        "gov2" : {"trec.collection.class":"TRECWebCollection",
+            "indexer.meta.forward.keys":"docno,url",
+            "indexer.meta.forward.keylens":"26,256",
+            "metaindex.compressed.crop.long":"true"
+            },
+        #http://ir.dcs.gla.ac.uk/wiki/Terrier/ClueWeb09-B
+        "cw09b" : {
+            "trec.collection.class":"WARC018Collection",
+            "indexer.meta.forward.keys":"docno,url",
+            "indexer.meta.forward.keylens":"26,256",
+            "indexer.meta.reverse.keys":"docno",
+            "metaindex.compressed.crop.long":"true"},
+        #http://ir.dcs.gla.ac.uk/wiki/Terrier/ClueWeb12
+        "cw12b" : {
             "trec.collection.class":"WARC10Collection",
             "indexer.meta.forward.keys":"docno,url",
             "indexer.meta.forward.keylens":"26,256",
             "indexer.meta.reverse.keys":"docno",
             "metaindex.compressed.crop.long":"true"},
-		"core18" : {
-			"terrier.mvn.coords":"uk.ac.gla.dcs.terrierteam:terrier-wapo:0.1",
-			"trec.collection.class":"uk.ac.gla.terrier.indexing.WAPOCollection",
-			"indexer.meta.forward.keylens":"40"
-		}
-}
+        "core18" : {
+            "terrier.mvn.coords":"uk.ac.gla.dcs.terrierteam:terrier-wapo:0.1",
+            "trec.collection.class":"uk.ac.gla.terrier.indexing.WAPOCollection",
+            "indexer.meta.forward.keylens":"40"
+            }
+        }
 
 print(args.json["opts"])
 for collection in args.json["collections"]:
     name, path = collection['name'], collection['path']
     params = " ".join( [ "-D"+k+"="+v for k, v in index_options[name].items() ] )
-
+    block_index = False
     opts=""
     if "opts" in args.json:
+        if "block.indexing" in args.json["opts"] and args.json['opts']['block.indexing'] == 'true':
+            block_index=True
+            del args.json['opts']['block.indexing']
         opts = opts + " ".join( ["-D"+k+"="+v for k, v in args.json["opts"].items()]  )
-    
+        print(opts)  
     subprocess.run("""
         /work/terrier-core/bin/trec_setup.sh 
         {0}""".format(path).split(), env=my_env)
 
-	#grep out any readmes
+    #grep out any readmes
     subprocess.run(["/bin/sh", "-c", "egrep -vi 'readme' /work/terrier-core/etc/collection.spec > /work/terrier-core/etc/collection.spec.new; mv /work/terrier-core/etc/collection.spec.new /work/terrier-core/etc/collection.spec"], env=my_env)
 
     #grep out congressional record
     if name == "robust04":
-	    subprocess.run(["/bin/sh", "-c", "egrep -vi 'cr93|read|dtd' /work/terrier-core/etc/collection.spec > /work/terrier-core/etc/collection.spec.new; mv /work/terrier-core/etc/collection.spec.new /work/terrier-core/etc/collection.spec"], env=my_env)
+        subprocess.run(["/bin/sh", "-c", "egrep -vi 'cr93|read|dtd' /work/terrier-core/etc/collection.spec > /work/terrier-core/etc/collection.spec.new; mv /work/terrier-core/etc/collection.spec.new /work/terrier-core/etc/collection.spec"], env=my_env)
 
     print("Files to index...")
     subprocess.run(["wc", "-l", "/work/terrier-core/etc/collection.spec"])
 
+
     cmd="""
         /work/terrier-core/bin/terrier batchindexing -p
         -I /work/indexes/{0} {1} {2}""".format(name, params, opts)
+    if block_index:
+        cmd = cmd.replace("-p", "-b -p")
     print("Indexing command is " + cmd)
+
     subprocess.run(cmd.split(), env=my_env)
 
     subprocess.run("/work/terrier-core/bin/terrier indexstats -I /work/indexes/{0}".format(name).split(), env=my_env)
