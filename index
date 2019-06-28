@@ -25,6 +25,7 @@ if not os.path.isdir("/work/indexes"):
 
 
 index_options = {
+        "default" : {},
         #http://ir.dcs.gla.ac.uk/wiki/Terrier/Disks1%262
         "robust04" : {"terrier.mvn.coords": "org.apache.commons:commons-compress:1.18",
             "files.mappings":"z:org.apache.commons.compress.compressors.z.ZCompressorInputStream:null," + 
