@@ -11,7 +11,7 @@ This image is available on [Docker Hub](https://hub.docker.com/r/osirrc2019/terr
 
 + Supported test collections: `robust04`, `gov2`, `cw09b`, `cw12b` (web), `core18` (newswire)
 + Supported hooks: `init`, `index`, `train`, `search`
-+ Check the most current release version at the (https://github.com/osirrc/terrier-docker/releases)[Releases] page, and replace `x.y.z` with the most current tag.
++ Check the most current release version at the (https://github.com/osirrc/terrier-docker/releases)[Releases] page, and replace `vx.y.z` with the desired release version or with `current` for the latest release
 
 ## Quick Start
 
