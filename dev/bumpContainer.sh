@@ -5,7 +5,7 @@
 savetag=$1
 
 containerid=`docker run -d -t terrier:$savetag /bin/bash`
-for file in init search train; do
+for file in init search train interact; do
 	docker cp $file $containerid:/$file
 done
 docker commit $containerid terrier:$savetag

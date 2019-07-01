@@ -1,0 +1,23 @@
+#!/bin/bash
+
+if [ -z "${BASH_VERSINFO}" ] || [ -z "${BASH_VERSINFO[0]}" ] || [ ${BASH_VERSINFO[0]} -lt 4 ]; then echo "This script requires Bash version >= 4"; exit 1; fi
+
+echo "interact will start HTTP servers on ports 1980, 1981, 1981"
+echo 'use "docker port $(docker ps -aql)" to see the corresponding ports on the host machine'
+
+#this takes the last index present in the container
+INDEX=`ls -tr /work/indexes/*.properties | tail -n 1`
+
+#terrier-platform based UIs
+cd /work/terrier-core
+
+#start the simple web based UI
+coproc bin/terrier http -I $INDEX 1980 src/webapps/simple/
+
+#start the REST server
+coproc bin/terrier rest-singleindex -I $INDEX 1981
+
+#start the notebooks
+cd /notebooks
+echo "Make use of the notebook password token undernoted below"
+jupyter notebook --port=1982 --allow-root --ip=0.0.0.0
