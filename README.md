@@ -11,7 +11,7 @@ This image is available on [Docker Hub](https://hub.docker.com/r/osirrc2019/terr
 
 + Supported test collections: `robust04`, `gov2`, `cw09b`, `cw12b` (web), `core18` (newswire)
 + Supported hooks: `init`, `index`, `train`, `search`
-+ Check the most current release version at the (https://github.com/osirrc/terrier-docker/releases)[Releases] page, and replace `vx.y.z` with the desired release version or with `current` for the latest release
++ Check the most current release version at the [Releases](https://github.com/osirrc/terrier-docker/releases) page, and replace `vx.y.z` with the desired release version or with `current` for the latest release
 
 ## Quick Start
 
@@ -23,14 +23,14 @@ python run.py prepare --repo osirrc2019/terrier --tag vx.y.z --collections robus
 
 The following `jig` command can be used to perform a retrieval run on the collection with the `robust04` test collection, using BM25 as ranker:
 
-```
+```bash
 python run.py search  \
-	--repo osirrc2019/terrier \
-	--tag vx.y.z \
-	--collection robust04 \
-	--topic topics/topics.robust04.txt \
-	--qrels qrels/qrels.robust04.txt\
-	--output /tmp/runs
+    --repo osirrc2019/terrier \
+    --tag vx.y.z \
+    --collection robust04 \
+    --topic topics/topics.robust04.txt \
+    --qrels qrels/qrels.robust04.txt\
+    --output /tmp/runs
 ```
 
 
@@ -42,52 +42,74 @@ Additionally, it supports Query Expansion and Proximity-based (DFRD) search, by 
 
 (BM25)
 
-	python run.py search  --repo osirrc2019/terrier --tag vx.y.z --collection robust04  --topic topics/topics.robust04.txt --qrels qrels/qrels.robust04.txt   --output /tmp/runs --opts config=bm25
+```bash
+python run.py search  --repo osirrc2019/terrier --tag vx.y.z --collection robust04  --topic topics/topics.robust04.txt --qrels qrels/qrels.robust04.txt   --output /tmp/runs --opts config=bm25
+```
 
 (BM25 + query expansion)
 
-	python run.py search  --repo osirrc2019/terrier --tag vx.y.z --collection robust04  --topic topics/topics.robust04.txt --qrels qrels/qrels.robust04.txt   --output /tmp/runs --opts config=bm25_qe
+```bash
+python run.py search  --repo osirrc2019/terrier --tag vx.y.z --collection robust04  --topic topics/topics.robust04.txt --qrels qrels/qrels.robust04.txt   --output /tmp/runs --opts config=bm25_qe
+```
 
 (BM25 + Proximity)
 
-	python run.py search  --repo osirrc2019/terrier --tag vx.y.z --collection robust04  --topic topics/topics.robust04.txt --qrels qrels/qrels.robust04.txt   --output /tmp/runs --opts config=bm25_prox
+```bash
+python run.py search  --repo osirrc2019/terrier --tag vx.y.z --collection robust04  --topic topics/topics.robust04.txt --qrels qrels/qrels.robust04.txt   --output /tmp/runs --opts config=bm25_prox
+```
 
 (BM25 + Proximity + query expansion)
 
-	python run.py search  --repo osirrc2019/terrier --tag vx.y.z --collection robust04  --topic topics/topics.robust04.txt --qrels qrels/qrels.robust04.txt   --output /tmp/runs --opts config=bm25_prox_qe
+```bash
+python run.py search  --repo osirrc2019/terrier --tag vx.y.z --collection robust04  --topic topics/topics.robust04.txt --qrels qrels/qrels.robust04.txt   --output /tmp/runs --opts config=bm25_prox_qe
+```
 
 (PL2)
 
-	python run.py search  --repo osirrc2019/terrier --tag vx.y.z --collection robust04  --topic topics/topics.robust04.txt --qrels qrels/qrels.robust04.txt   --output /tmp/runs --opts config=pl2
+```bash
+python run.py search  --repo osirrc2019/terrier --tag vx.y.z --collection robust04  --topic topics/topics.robust04.txt --qrels qrels/qrels.robust04.txt   --output /tmp/runs --opts config=pl2
+```
 
 (PL2 + query expansion)
 
-	python run.py search  --repo osirrc2019/terrier --tag vx.y.z --collection robust04  --topic topics/topics.robust04.txt --qrels qrels/qrels.robust04.txt   --output /tmp/runs --opts config=pl2_qe
+```bash
+python run.py search  --repo osirrc2019/terrier --tag vx.y.z --collection robust04  --topic topics/topics.robust04.txt --qrels qrels/qrels.robust04.txt   --output /tmp/runs --opts config=pl2_qe
+```
 
 (PL2 + Proximity)
 
-	python run.py search  --repo osirrc2019/terrier --tag vx.y.z --collection robust04  --topic topics/topics.robust04.txt --qrels qrels/qrels.robust04.txt   --output /tmp/runs --opts config=pl2_prox
-
+```bash
+python run.py search  --repo osirrc2019/terrier --tag vx.y.z --collection robust04  --topic topics/topics.robust04.txt --qrels qrels/qrels.robust04.txt   --output /tmp/runs --opts config=pl2_prox
+```
 (PL2 + Proximity + query expansion)
 
-	python run.py search  --repo osirrc2019/terrier --tag vx.y.z --collection robust04  --topic topics/topics.robust04.txt --qrels qrels/qrels.robust04.txt   --output /tmp/runs --opts config=pl2_prox_qe
-
+```bash
+python run.py search  --repo osirrc2019/terrier --tag vx.y.z --collection robust04  --topic topics/topics.robust04.txt --qrels qrels/qrels.robust04.txt   --output /tmp/runs --opts config=pl2_prox_qe
+```
 
 (DPH)
 
-	python run.py search  --repo osirrc2019/terrier --tag vx.y.z --collection robust04  --topic topics/topics.robust04.txt --qrels qrels/qrels.robust04.txt   --output /tmp/runs --opts config=dph
-	
+```bash
+python run.py search  --repo osirrc2019/terrier --tag vx.y.z --collection robust04  --topic topics/topics.robust04.txt --qrels qrels/qrels.robust04.txt   --output /tmp/runs --opts config=dph
+```	
+
 (DPH + query expansion)
 
-	python run.py search  --repo osirrc2019/terrier --tag vx.y.z --collection robust04  --topic topics/topics.robust04.txt --qrels qrels/qrels.robust04.txt   --output /tmp/runs --opts config=dph_qe
+```bash
+python run.py search  --repo osirrc2019/terrier --tag vx.y.z --collection robust04  --topic topics/topics.robust04.txt --qrels qrels/qrels.robust04.txt   --output /tmp/runs --opts config=dph_qe
+```
 
 (DPH + Proximity)
 
-	python run.py search  --repo osirrc2019/terrier --tag vx.y.z --collection robust04  --topic topics/topics.robust04.txt --qrels qrels/qrels.robust04.txt   --output /tmp/runs --opts config=dph_prox
-	
+```bash
+python run.py search  --repo osirrc2019/terrier --tag vx.y.z --collection robust04  --topic topics/topics.robust04.txt --qrels qrels/qrels.robust04.txt   --output /tmp/runs --opts config=dph_prox
+```	
+
 (DPH + Proximity + query expansion)
 
-	python run.py search  --repo osirrc2019/terrier --tag vx.y.z --collection robust04  --topic topics/topics.robust04.txt --qrels qrels/qrels.robust04.txt   --output /tmp/runs --opts config=dph_prox_qe
+```bash
+python run.py search  --repo osirrc2019/terrier --tag vx.y.z --collection robust04  --topic topics/topics.robust04.txt --qrels qrels/qrels.robust04.txt   --output /tmp/runs --opts config=dph_prox_qe
+```
 
 **NOTE:** for running DFRD (Proximity-based model), the index must be build using the `--opts=block.indexing=true` param
 
@@ -98,13 +120,17 @@ Learning-to-rank will typically require that the index has more information, e.g
 
 ### Indexing:
 
-	python run.py prepare     --repo osirrc2019/terrier --tag vx.y.z   --collections robust04=/tmp/disk45/=trectext --opts "FieldTags.process=HEADLINE"
+```bash
+python run.py prepare     --repo osirrc2019/terrier --tag vx.y.z   --collections robust04=/tmp/disk45/=trectext --opts "FieldTags.process=HEADLINE"
+```
 
 ### Training:
 
-You need to specify the features to be used by Terrier - see http://terrier.org/docs/v5.1/learning.html for more information about Terrier feature definitions.
+You need to specify the features to be used by Terrier - see <http://terrier.org/docs/v5.1/learning.html> for more information about Terrier feature definitions.
 
-	python run.py train  --repo osirrc2019/terrier --tag vx.y.z --collection robust04  --topic topics/topics.robust04.txt --qrels qrels/qrels.robust04.txt    --test_split $PWD/sample_training_validation_query_ids/robust04_test.txt  --validation_split $PWD/sample_training_validation_query_ids/robust04_validation.txt --model_folder /tmp/runs --opts features="SAMPLE;WMODEL:SingleFieldModel(BM25,0);QI:SingleFieldModel(Dl,0)"
+```bash
+python run.py train  --repo osirrc2019/terrier --tag vx.y.z --collection robust04  --topic topics/topics.robust04.txt --qrels qrels/qrels.robust04.txt    --test_split $PWD/sample_training_validation_query_ids/robust04_test.txt  --validation_split $PWD/sample_training_validation_query_ids/robust04_validation.txt --model_folder /tmp/runs --opts features="SAMPLE;WMODEL:SingleFieldModel(BM25,0);QI:SingleFieldModel(Dl,0)"
+```
 
 ### Retrieval:
 
@@ -134,7 +160,41 @@ MAP                                     | BM25      | +QE   | +Prox     | +Prox 
 [TREC 2005 Terabyte Track: Topics 751-800](http://trec.nist.gov/data/terabyte05.html) |0.3081|0.3506|0.3126| 0.3507|0.3311|0.3754|0.3255|0.3095|0.2884|0.3160
 [TREC 2006 Terabyte Track: Topics 801-850](http://trec.nist.gov/data/terabyte06.html) |0.2629|0.3118|0.2724|0.3085|0.2917|0.3494|0.2904|0.3288|0.2363|0.2739
 
+## Interact hooks
+
+This image also supports the `interact` hooks from the [OSIRRC JIG](https://github.com/osirrc/jig). After initializing the image (with `python run.py prepare`):
+```
+python run.py interact --repo terrier --tag vx.y.z
+```
+The following (internal) ports will be made available:
+
++ Port `1980`: _Search interface_:  A user-friendly HTML search interface, reachable using a web browser. (more information can be found at the [Terrier Documentation](http:0//terrier.org/docs/v5.1/terrier_http.html))
+
++ Port `1981`:  _REST API_: This port provides a REST API for Terrier. You can either directly submit requests to this port or use another Terrier instance as a client, like:
+
+```bash
+$ /bin/terrier interactive -I http://dockerhost:1981/
+terrier query> information retrieval end:5
+  Displaying 1-6 results
+0 FBIS4-20699 10.268754805435458
+1 FBIS4-20702 9.768490153503198
+2 FR941027-2-00046 9.491347902606723
+3 FBIS4-20701 9.456022500508775
+4 FBIS3-24510 9.31403481019499
+5 FBIS4-20700 8.79234249484928
+```
+
++ Port `1982`: _Terrier-Spark Jupyter Notebook_: This port initialises a Scala Jupyter Notebook that is able to interact with the Terrier Index previously initialized. By acessing the notebook, a sample notebook (`simpleRun.ipynb`) is available, with minimal working examples. For more information, check [Macdonald, 2018](http://eprints.gla.ac.uk/160904/7/160904.pdf) and [Macdonald et al.,  2018](http://ceur-ws.org/Vol-2167/paper12.pdf).
+  
+**NOTE** Currently, the JIG may redirect these ports to diverse ones in the host machine. This is due to the way that Docker deals with port assignment. Therefore, you should check the correct port assignment by running:
+
+```bash
+$> docker ps
+```
+
+and check the right port assignment under the `PORTS` column.
 
 ## Reviews
+
 + Documentation reviewed at commit [`0b13139`](https://github.com/osirrc/terrier-docker/commit/c09730fab75e9c4ff892cb9dc5d6b7a500b13139) (2019-06-16) by [Ryan Clancy](https://github.com/r-clancy/).
 + Documentation reviewed at commit [`9700a36`](https://github.com/osirrc/terrier-docker/commit/c00dcefc4dc19aae25426013a65bb04b79700a36) (2019-06-21) by [Ryan Clancy](https://github.com/r-clancy/).
