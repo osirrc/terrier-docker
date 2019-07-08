@@ -168,7 +168,7 @@ python run.py interact --repo terrier --tag vx.y.z
 ```
 The following (internal) ports will be made available:
 
-+ Port `1980`: _Search interface_:  A user-friendly HTML search interface, reachable using a web browser. (more information can be found at the [Terrier Documentation](http:0//terrier.org/docs/v5.1/terrier_http.html))
++ Port `1980`: _Search interface_:  A user-friendly HTML search interface, reachable using a web browser. (more information can be found at the [Terrier Documentation](http://terrier.org/docs/v5.1/terrier_http.html))
 
 + Port `1981`:  _REST API_: This port provides a REST API for Terrier. You can either directly submit requests to this port or use another Terrier instance as a client, like:
 
